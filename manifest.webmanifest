@@ -1,0 +1,21 @@
+{
+  "name": "남구 청년 창업가 마케팅 지원 접수",
+  "short_name": "남구 청년창업 접수",
+  "description": "청년 창업가 마케팅 심화교육 및 마케팅비 지원 사업 온라인 접수 (프로토타입)",
+  "start_url": "./index.html#/",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#ffffff",
+  "theme_color": "#0b50d0",
+  "lang": "ko",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "신청하기", "url": "./index.html#/apply" },
+    { "name": "내 접수", "url": "./index.html#/my" }
+  ]
+}
