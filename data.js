@@ -34,4 +34,22 @@ window.SCHEDULE = [
 ];
 
 window.DEADLINE = '2027-02-28T23:59:59+09:00';
+
+// 남구청 공개 정보 (2026. 9. 26. bsnamgu.go.kr 확인)
+window.CONTACT = {
+  dept: '남구청 청년정책과 청년지원팀', tel: '051-607-3684',
+  center: '남구 청년창조발전소 고고씽JOB', centerAddr: '부산광역시 남구 용소로 46번길 7', centerTel: '051-607-3666~3667', centerHours: '평일 10:00~21:00, 토요일 10:00~19:00 (일·공휴일 휴무)'
+};
+window.NAMGU_LINKS = [
+  { t: '청년 사업자 임차료 지원', d: '18~39세 · 7년 이내 사업자 · 월 20만 원 (매년 2월 접수)', h: 'https://www.bsnamgu.go.kr/index.namgu?menuCd=DOM_000000102012012000' },
+  { t: '초기창업기업 자생력 강화', d: '청년창조발전소 참여기업 모집', h: 'https://www.bsnamgu.go.kr/namgu_youth/index.do' },
+  { t: '청년 자격시험 응시료 지원', d: '미취업 청년 연 1회 최대 10만 원', h: 'https://www.bsnamgu.go.kr/index.namgu?menuCd=DOM_000000102012011000' }
+];
+window.DOCS = [
+  ['주민등록표 초본', '최근 5년 주소 이력 포함, 신청일 기준 10일 이내 발급', true],
+  ['사업자등록증', '사업장 소재지·개업일 확인', true],
+  ['신청자 명의 통장 사본', '선발 후 지원금 지급용', true],
+  ['매출 증빙 서류', '최근 12개월 (부가세 신고서·매출 집계 등), 선택', false],
+  ['수상 증빙', '상장·확인서, 가점 신청 시', false]
+];
 window.SUBMIT_ENDPOINT = ''; // 실제 운영 시 접수 서버 URL(POST JSON). 비우면 기기 내 저장만.

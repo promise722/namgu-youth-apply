@@ -16,7 +16,29 @@
   const saveDraft = () => { draft.savedAt = new Date().toISOString(); save(LS.draft, draft); };
 
   /* ---------- 라우팅 ---------- */
-  const routes = { '/': home, '/check': check, '/apply': apply, '/done': done, '/my': my, '/admin': admin };
+  const routes = { '/': home, '/notice': notice, '/check': check, '/apply': apply, '/done': done, '/my': my, '/admin': admin };
+
+  /* ---------- 공고문 ---------- */
+  function notice() {
+    main.innerHTML = `
+      <h1>모집 공고(안)</h1>
+      <p class="muted">2027년 청년 창업가 마케팅 심화교육 및 마케팅비 지원 사업 참여자 모집 · 남구청 청년정책 공고 양식 기준</p>
+      <section class="card">
+        <div class="summary">
+          <div><b>신청기간</b><span>2027. 2. 1.(월) ~ 2. 28.(일)</span></div>
+          <div><b>지원기간</b><span>2027. 4월 ~ 10월 (교육 3개월 + 집행 4개월), '28. 상반기 추적</span></div>
+          <div><b>지원대상</b><span>연령 ▸ 공고일 기준 18~39세 청년<br>주소지 ▸ 부산 남구 주민등록자<br>사업장 ▸ 사업자등록 후 실제 영업 중인 창업사업장 (부산 내, 남구 소재 우대)<br>출석 ▸ 4~6월 주 1회 교육 80% 이상 참석 가능자</span></div>
+          <div><b>지원내용</b><span>마케팅 심화교육 12회(강의 6 + 실전 밋업 6) 무료<br>계획서 심사 통과 시 1인당 최대 200만 원 마케팅비 (자부담 10%, 광고비 70% 이상 집행)</span></div>
+          <div><b>선발인원</b><span>15명 + 예비 2명 (창업 공모전·경진대회 수상자 총점 10% 이내 가점)</span></div>
+          <div><b>신청방법</b><span>온라인(이 앱) 또는 남구 청년창조발전소 방문 접수</span></div>
+          <div><b>제출서류</b><span>${window.DOCS.map(([n, , r]) => `${esc(n)}${r ? '' : '(선택)'}`).join(', ')}</span></div>
+          <div><b>선발절차</b><span>서류 심사(3월 초) → 면접(3월 중) → 최종 발표(3월 말) → 오리엔테이션(4월 첫째 주)</span></div>
+          <div><b>문의</b><span>${esc(window.CONTACT.dept)} ☎ ${esc(window.CONTACT.tel)} · ${esc(window.CONTACT.center)} ☎ ${esc(window.CONTACT.centerTel)}</span></div>
+        </div>
+        <div class="alert alert--info" style="margin-top:16px"><span>ⓘ</span><span>본 공고문은 정책제안 시안입니다. 사업 확정 시 남구청 공고문이 우선합니다.</span></div>
+        <div class="actions"><a class="btn btn--primary" href="#/apply">온라인 신청하기</a><a class="btn btn--tertiary" href="#/check">자격 자가진단</a></div>
+      </section>`;
+  }
   function navigate() {
     const path = (location.hash.replace('#', '') || '/').split('?')[0];
     const view = routes[path] || home;
@@ -37,6 +59,7 @@
   function home() {
     main.innerHTML = `
       <section class="card card--hero">
+        <p class="slogan">변화하는 남구, 세계가 찾는 도시 · 2027 남구 청년정책(안)</p>
         <span class="dday">${esc(dday())} · 2027. 2. 28.(일) 23:59</span>
         <h1>청년 창업가 마케팅 심화교육<br>및 마케팅비 지원 사업</h1>
         <p class="muted">배우고, 쓰고, 증명한다. 3개월 교육 후 네이버 플레이스·당근 등 지역 채널 광고를 직접 집행하고 수치로 성과를 확인하는 남구형 집행 연계 창업 지원.</p>
@@ -51,8 +74,13 @@
         <div class="stat"><div class="stat__v">12회</div><div class="stat__l">강의 6 + 실전 밋업 6</div></div>
         <div class="stat"><div class="stat__v">10%</div><div class="stat__l">자부담 (형식 집행 방지)</div></div>
       </div>
+      <div class="trio">
+        <a class="btn btn--secondary" href="#/notice">공고문 확인<small>지원 자격·제출서류</small></a>
+        <a class="btn btn--primary" href="#/apply">온라인 신청하기<small>5단계 · 자동 임시저장</small></a>
+        <a class="btn btn--tertiary" href="#/my">접수확인<small>접수번호로 조회·수정</small></a>
+      </div>
       <section class="card">
-        <h2 style="margin-top:0">추진 일정</h2>
+        <h2 class="sec-title">추진 일정</h2>
         <ol class="timeline">${window.SCHEDULE.map((s, i) => `<li class="${s.now ? 'now' : i === 0 ? 'done' : ''}"><span class="dot" aria-hidden="true"></span><div><div class="when">${esc(s.m)}</div><div class="what">${esc(s.t)}</div><div class="small muted">${esc(s.d)}</div></div></li>`).join('')}</ol>
       </section>
       <section class="card">
@@ -70,11 +98,26 @@
           <li>집행 중 전문위원 중간점검 1회, 종료 6개월 후 추적</li>
         </ul>
         <div class="alert alert--warn"><span>⚠</span><span>심사 결과에 따라 미지원 인원이 발생할 수 있으며, 지원금은 「남구 지방보조금 관리 조례」에 따라 정산·환수 규정이 적용됩니다.</span></div>
+        <h3>제출서류</h3>
+        <div class="tbl-wrap"><table class="tbl"><thead><tr><th>구분</th><th>유의사항</th><th>필수</th></tr></thead><tbody>
+          ${window.DOCS.map(([n, d, r]) => `<tr><td><strong>${esc(n)}</strong></td><td>${esc(d)}</td><td>${r ? '<span class="badge badge--red">필수</span>' : '<span class="badge">선택</span>'}</td></tr>`).join('')}
+        </tbody></table></div>
+        <p class="hint">서류 발급처: 정부24, 국세청 홈택스 등. 온라인 신청 시 스캔본 또는 PDF 등록, 접수 시 없으면 면접 때 지참 가능.</p>
+      </section>
+      <section class="card">
+        <h2 class="sec-title">남구 청년정책 함께 보기</h2>
+        <p class="muted small">본 사업은 아래 남구 기존 사업과 대상이 겹치지만 지원 항목이 달라 동시 참여할 수 있습니다.</p>
+        <div class="linkcards">${window.NAMGU_LINKS.map((l) => `<a class="linkcard" href="${esc(l.h)}" target="_blank" rel="noopener"><b>${esc(l.t)}</b><span>${esc(l.d)}</span></a>`).join('')}</div>
+        <h3>문의(안)</h3>
+        <div class="contact">
+          <div><b>${esc(window.CONTACT.dept)}</b> ${esc(window.CONTACT.tel)}</div>
+          <div><b>${esc(window.CONTACT.center)}</b> ${esc(window.CONTACT.centerAddr)} · ${esc(window.CONTACT.centerTel)} · ${esc(window.CONTACT.centerHours)}</div>
+        </div>
       </section>
       <section class="card faq">
         <h2 style="margin-top:0">자주 묻는 질문</h2>
         <details><summary>예비창업자(사업자등록 전)도 신청할 수 있나요?</summary><p>이번 사업은 사업자등록을 보유한 창업가 대상입니다. 예비창업자는 남구 청년창조발전소 등 별도 프로그램을 안내드립니다.</p></details>
-        <details><summary>부산시 소상공인 온라인 마케팅 비용 지원(50만 원)과 중복 신청 가능한가요?</summary><p>가능합니다. 다만 동일 광고 건에 대해 두 사업에서 이중으로 정산받을 수 없습니다.</p></details>
+        <details><summary>남구 청년 사업자 임차료 지원(월 20만 원)이나 부산시 온라인 마케팅 비용 지원(50만 원)과 중복 신청 가능한가요?</summary><p>가능합니다. 임차료 지원은 지원 항목이 다르고, 부산시 마케팅 비용 지원은 동일 광고 건에 대해 두 사업에서 이중으로 정산받을 수 없다는 조건만 있습니다.</p></details>
         <details><summary>자부담 10%는 언제 내나요?</summary><p>지원금 집행 시 본인 부담분(지원액의 10%)을 포함해 집행하고, 정산 시 증빙합니다. 별도 납부는 없습니다.</p></details>
         <details><summary>접수 후 수정할 수 있나요?</summary><p>접수 마감 전까지 "내 접수"에서 접수번호로 조회해 수정·재제출할 수 있습니다.</p></details>
         <details><summary>서류는 무엇이 필요한가요?</summary><p>사업자등록증, 주민등록초본(남구 거주 확인)은 필수이며, 수상 실적이 있으면 상장·확인서를 첨부합니다. 접수 시 파일이 없으면 선발 면접 때 지참해도 됩니다.</p></details>
@@ -147,7 +190,7 @@
       { k: 'award', l: '창업 관련 공모전·경진대회 수상 경력 (최근 3년)', t: 'radio', req: true, opts: ['없음', '있음'] },
       { k: 'awardDetail', l: '수상 내역 (대회명 · 주최 · 연도 · 등급)', t: 'textarea', req: false, ph: '예) 2025 남구 청년 창업동아리 아이디어 경진대회 · 남구청 · 우수상', showIf: (d) => d.award === '있음' },
       { k: 'prior', l: '남구·부산시 창업 지원사업 참여 이력', t: 'multi', req: false, opts: ['소셜리빙랩', '클래스 1839', '초기 창업기업 자생력 강화', '청년 창업동아리 경진대회', '부산시 온라인 마케팅 비용 지원', '기타', '없음'] },
-      { k: 'files', l: '첨부 서류', t: 'file', req: false, hint: '사업자등록증, 주민등록초본(필수), 수상 증빙(해당 시). PDF·JPG·PNG, 파일당 5MB 이하. 지금 없으면 면접 때 지참 가능.' }
+      { k: 'files', l: '첨부 서류', t: 'file', req: false, hint: '주민등록표 초본(최근 5년 주소 포함)·사업자등록증·통장 사본(필수), 매출 증빙·수상 증빙(선택). PDF·JPG·PNG, 파일당 5MB 이하. 지금 없으면 면접 때 지참 가능.' }
     ],
     4: [
       { k: 'agree1', l: '개인정보 수집·이용에 동의합니다. (수집 항목: 성명·생년월일·연락처·주소·사업자 정보 / 목적: 선발 심사 및 사업 운영 / 보유: 사업 종료 후 3년)', t: 'check', req: true },

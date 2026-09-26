@@ -1,4 +1,4 @@
-const CACHE = 'namgu-apply-v1';
+const CACHE = 'namgu-apply-v2';
 const SHELL = [
   './', './index.html', './styles.css', './app.js', './data.js', './manifest.webmanifest',
   './icons/icon-192.png', './icons/icon-512.png', './icons/icon-512-maskable.png'
