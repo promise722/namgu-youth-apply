@@ -79,6 +79,10 @@
         <a class="btn btn--primary" href="#/apply">온라인 신청하기<small>5단계 · 자동 임시저장</small></a>
         <a class="btn btn--tertiary" href="#/my">접수확인<small>접수번호로 조회·수정</small></a>
       </div>
+      <section class="card mapcard">
+        <div><h2 style="margin:0 0 6px">남구 업종·상권 3D 지도</h2><p class="muted" style="margin:0">17개 행정동의 상가업소 수와 업종 대분류 비중을 입체 지도로 확인하세요. 내 가게 주변 업종 구성을 볼 수 있습니다.</p></div>
+        <a class="btn btn--primary" href="map3d/">3D 지도 열기</a>
+      </section>
       <section class="card">
         <h2 class="sec-title">추진 일정</h2>
         <ol class="timeline">${window.SCHEDULE.map((s, i) => `<li class="${s.now ? 'now' : i === 0 ? 'done' : ''}"><span class="dot" aria-hidden="true"></span><div><div class="when">${esc(s.m)}</div><div class="what">${esc(s.t)}</div><div class="small muted">${esc(s.d)}</div></div></li>`).join('')}</ol>
@@ -390,7 +394,8 @@
         <div class="stat"><div class="stat__v">${byStatus['서류검토'] || 0}</div><div class="stat__l">서류검토 중</div></div>
       </div>
       <div class="card"><strong>사업장 행정동</strong> <span class="muted small">${top(byDong)}</span><br><strong>업종</strong> <span class="muted small">${top(byInd)}</span><div class="hint">군집별 홍보 배분 목표: 대학·중심상권 10 · 주거상권 3 · 항만 배후 2 (정량분석 4절)</div></div>
-      <div class="actions" style="margin:0 0 12px"><button class="btn btn--secondary btn--sm" id="csv">CSV 내보내기</button><button class="btn btn--secondary btn--sm" id="json">JSON 백업</button><label class="btn btn--tertiary btn--sm" for="imp">JSON 가져오기<input type="file" id="imp" accept=".json" hidden></label><button class="btn btn--danger btn--sm" id="wipe">전체 삭제</button><button class="btn btn--text btn--sm" id="lock">잠금</button></div>
+      ${compare(apps)}
+      <div class="actions" style="margin:0 0 12px"><a class="btn btn--primary btn--sm" href="map3d/">3D 지도에서 보기</a><button class="btn btn--secondary btn--sm" id="csv">CSV 내보내기</button><button class="btn btn--secondary btn--sm" id="json">JSON 백업</button><label class="btn btn--tertiary btn--sm" for="imp">JSON 가져오기<input type="file" id="imp" accept=".json" hidden></label><button class="btn btn--danger btn--sm" id="wipe">전체 삭제</button><button class="btn btn--text btn--sm" id="lock">잠금</button></div>
       <div class="tbl-wrap"><table class="tbl"><thead><tr><th>접수번호</th><th>신청자</th><th>상호 / 업종</th><th>사업장</th><th>업력</th><th>월 광고비</th><th>수상</th><th>첨부</th><th>상태</th></tr></thead><tbody>
       ${apps.map((a, i) => `<tr><td><strong>${esc(a.no)}</strong><br><span class="small muted">${new Date(a.submittedAt).toLocaleDateString('ko-KR')}</span></td><td>${esc(a.data.name)}<br><span class="small muted">${esc(a.data.phone)}</span></td><td>${esc(a.data.bizName)}<br><span class="small muted">${esc(a.data.indL)} > ${esc(a.data.indM)}</span></td><td>${esc(a.data.bizDong)}</td><td>${yrs(a.data.openDate)}</td><td>${fmt(a.data.adSpend)}만</td><td>${a.data.award === '있음' ? '○' : '-'}</td><td>${a.files.length}</td><td><select data-st="${i}" style="min-height:40px;padding:6px 32px 6px 10px;font-size:.9rem">${['접수', '서류검토', '선발', '예비', '미선발'].map((s) => `<option ${a.status === s ? 'selected' : ''}>${s}</option>`).join('')}</select></td></tr>`).join('') || '<tr><td colspan="9">접수 없음</td></tr>'}
       </tbody></table></div>`;
@@ -404,6 +409,28 @@
     $('#imp').addEventListener('change', async (e) => { try { const arr = JSON.parse(await e.target.files[0].text()); if (!Array.isArray(arr)) throw 0; const merged = [...apps]; arr.forEach((r) => { const i = merged.findIndex((x) => x.no === r.no); if (i >= 0) merged[i] = r; else merged.push(r); }); save(LS.apps, merged); toast(`${arr.length}건을 가져왔습니다.`); admin(); } catch { toast('파일 형식이 올바르지 않습니다.'); } });
     $('#wipe').addEventListener('click', () => { if (confirm('이 기기의 접수 데이터를 모두 삭제할까요? 되돌릴 수 없습니다.')) { save(LS.apps, []); admin(); } });
     $('#lock').addEventListener('click', () => { sessionStorage.removeItem('adminOk'); admin(); });
+  }
+  function compare(apps) {
+    const share = window.NAMGU_IND_SHARE, n = apps.length;
+    const cnt = {}; apps.forEach((a) => { const k = a.data.indL || '기타'; cnt[k] = (cnt[k] || 0) + 1; });
+    const keys = [...new Set([...Object.keys(share), ...Object.keys(cnt)])].sort((a, b) => (share[b] || 0) - (share[a] || 0));
+    const sign = (d) => (d >= 0 ? '+' : '') + d.toFixed(1) + '%p';
+    const rows = keys.map((k) => {
+      const s = share[k] || 0, a = n ? (cnt[k] || 0) / n * 100 : 0, d = a - s;
+      const tag = !n ? '' : Math.abs(d) < 5 ? '<span class="badge">비슷</span>' : d > 0 ? '<span class="badge badge--blue">지원 많음</span>' : '<span class="badge badge--yellow">지원 적음</span>';
+      return `<tr><td><strong>${esc(k)}</strong></td><td><div class="cmp"><i class="cmp__a" style="width:${Math.min(s, 100)}%"></i></div><span class="small muted">${s.toFixed(1)}%</span></td><td><div class="cmp"><i class="cmp__b" style="width:${Math.min(a, 100)}%"></i></div><span class="small muted">${cnt[k] || 0}명 · ${a.toFixed(1)}%</span></td><td>${n ? sign(d) : '-'}</td><td>${tag}</td></tr>`;
+    }).join('');
+    const dc = {}; apps.forEach((a) => { const k = a.data.bizDong || '-'; dc[k] = (dc[k] || 0) + 1; });
+    const drows = Object.entries(window.NAMGU_DONG_STORES).sort((a, b) => b[1] - a[1]).map(([k, v]) => {
+      const s = v / window.NAMGU_STORE_TOTAL * 100, a = n ? (dc[k] || 0) / n * 100 : 0;
+      return `<tr><td>${esc(k)}</td><td>${v.toLocaleString('ko-KR')} · ${s.toFixed(1)}%</td><td>${dc[k] || 0}명 · ${a.toFixed(1)}%</td><td>${n ? sign(a - s) : '-'}</td></tr>`;
+    }).join('');
+    const out = dc['남구 외'] ? `<p class="hint">남구 외 사업장 지원자 ${dc['남구 외']}명</p>` : '';
+    return `<section class="card"><h2 class="sec-title">업종 대분류: 남구 분포 대비 지원자</h2>
+      <p class="muted small">남구 상가업소 ${window.NAMGU_STORE_TOTAL.toLocaleString('ko-KR')}개소의 업종 비중과 이 기기에 접수된 지원자 ${n}명의 업종 비중을 비교합니다. 차이가 +5%p 이상이면 지원이 몰린 업종, −5%p 이하면 홍보가 덜 닿은 업종입니다.</p>
+      <div class="tbl-wrap"><table class="tbl"><thead><tr><th>업종</th><th>남구 업소 비중</th><th>지원자 비중</th><th>차이</th><th>판정</th></tr></thead><tbody>${rows}</tbody></table></div>
+      <details style="margin-top:12px"><summary style="font-weight:700;cursor:pointer;min-height:44px;display:flex;align-items:center">행정동별 업소 대비 지원자</summary>
+      <div class="tbl-wrap"><table class="tbl"><thead><tr><th>행정동</th><th>업소 수 · 비중</th><th>지원자 · 비중</th><th>차이</th></tr></thead><tbody>${drows}</tbody></table></div>${out}</details></section>`;
   }
   const yrs = (d) => { if (!d) return '-'; const y = (new Date() - new Date(d)) / (365.25 * 86400000); return y < 1 ? `${Math.round(y * 12)}개월` : `${y.toFixed(1)}년`; };
   const download = (name, content, type) => { const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([content], { type })); a.download = name; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 1000); };

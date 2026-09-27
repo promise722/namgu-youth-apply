@@ -50,7 +50,8 @@ tbody tr{cursor:pointer}
 <div id="map"></div>
 <div id="tip"></div>
 <section class="panel" id="head">
-  <h1>부산 남구 행정동별 업종·업소 3D 지도</h1>
+  <a href="../" style="color:#9fd8ff;font-size:13px;text-decoration:none">← 접수 사이트로</a>
+  <h1 style="margin-top:6px">부산 남구 행정동별 업종·업소 3D 지도</h1>
   <p>높이 = 상가업소 수 · 색 = 업종 대분류. 드래그로 회전(Ctrl/우클릭 드래그), 휠로 확대, 동을 누르면 상세.</p>
   <div class="seg" role="group" aria-label="보기 방식">
     <button id="mStack" aria-pressed="true">업종 누적 기둥</button>
@@ -70,6 +71,8 @@ const COLORS = {"음식":[240,122,16],"소매":[0,169,208],"수리·개인":[64,
 const rgb = c => `rgb(${c[0]},${c[1]},${c[2]})`;
 const D = DATA.dongs, CATS = DATA.cats, names = Object.keys(D).sort((a,b)=>D[b].n-D[a].n);
 const H = 1.1; // 업소 1개 = 1.1m
+// 지원자 집계: 같은 기기의 접수 데이터에서 업종·행정동 건수만 읽음(관리 화면 잠금 해제 상태에서만).
+let APPS=[]; try{ if(sessionStorage.getItem('adminOk')) APPS=(JSON.parse(localStorage.getItem('namgu.apps.v1'))||[]).map(a=>({dong:a.data.bizDong,cat:a.data.indL||'기타'})); }catch(e){}
 let mode = 'stack', cat = '음식', sel = names[0];
 const catSel = document.getElementById('cat');
 catSel.innerHTML = ['생활형(음식+소매+수리·개인)',...CATS].map(c=>`<option>${c}</option>`).join('');
@@ -121,8 +124,18 @@ function detail(){
   el.innerHTML = `<h2>${sel}</h2>
   <div class="kv"><div><b>${d.n.toLocaleString()}</b><span>상가업소 수 (남구의 ${d.share}%)</span></div><div><b>≈${d.est.toLocaleString()}</b><span>추정 개인사업자 (비례 배분)</span></div><div><b>${d.life}%</b><span>생활형 업종 비중</span></div><div><b>${d.top}</b><span>1위 업종</span></div></div>
   ${bars}
+  ${appBlock(sel)}
   <table><thead><tr><th>행정동</th><th>업소</th><th>추정 사업자</th><th>생활형</th></tr></thead><tbody>${names.map(n=>`<tr data-n="${n}" class="${n===sel?'on':''}"><td>${n}</td><td>${D[n].n.toLocaleString()}</td><td>${D[n].est.toLocaleString()}</td><td>${D[n].life}%</td></tr>`).join('')}</tbody></table>`;
   el.querySelectorAll('tr[data-n]').forEach(r=>r.onclick=()=>{ sel=r.dataset.n; render(); });
+}
+function appBlock(n){
+  if(!sessionStorage.getItem('adminOk')) return `<p style="color:var(--sub);font-size:12.5px;margin:12px 0 0">지원자 분포는 접수 사이트 관리 화면에서 잠금을 해제한 뒤 "3D 지도에서 보기"로 열면 표시됩니다.</p>`;
+  const all=APPS.length, here=APPS.filter(a=>a.dong===n), tot=DATA.total;
+  const rows=[...CATS,'기타'].map(c=>{ const sh=c==='기타'?0:names.reduce((x,k)=>x+D[k].cats[c],0)/tot*100; const a=APPS.filter(x=>x.cat===c).length; return {c,sh,a,ap:all?a/all*100:0}; }).filter(r=>r.sh>0||r.a>0);
+  const sign=d=>(d>=0?'+':'')+d.toFixed(1)+'%p';
+  return `<h3 style="font-size:15px;margin:16px 0 6px">지원자 (이 기기 접수 ${all}명)</h3>
+  <div class="kv"><div><b>${here.length}</b><span>${n} 사업장 지원자</span></div><div><b>${all?(here.length/all*100).toFixed(1):'0.0'}%</b><span>지원자 비중 (업소 비중 ${D[n].share}%)</span></div></div>
+  <table><thead><tr><th>업종</th><th>남구 업소</th><th>지원자</th><th>차이</th></tr></thead><tbody>${rows.map(r=>`<tr><td>${r.c}</td><td>${r.sh.toFixed(1)}%</td><td>${r.a}명 · ${r.ap.toFixed(1)}%</td><td>${all?sign(r.ap-r.sh):'-'}</td></tr>`).join('')}</tbody></table>`;
 }
 function render(){ dg.setProps({layers:layers()}); legend(); detail(); }
 const bS=document.getElementById('mStack'), bC=document.getElementById('mChoro');

@@ -1,7 +1,7 @@
-const CACHE = 'namgu-apply-v2';
+const CACHE = 'namgu-apply-v3';
 const SHELL = [
   './', './index.html', './styles.css', './app.js', './data.js', './manifest.webmanifest',
-  './icons/icon-192.png', './icons/icon-512.png', './icons/icon-512-maskable.png'
+  './icons/icon-192.png', './icons/icon-512.png', './icons/icon-512-maskable.png', './map3d/index.html'
 ];
 
 self.addEventListener('install', (e) => {
