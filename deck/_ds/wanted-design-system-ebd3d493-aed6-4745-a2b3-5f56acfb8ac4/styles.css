@@ -1,0 +1,10 @@
+@import './tokens/fonts.css';
+@import './tokens/fig-tokens.css';
+@import './tokens/fig-typography.css';
+@import './tokens/typography.css';
+@import './components/actions/fig-assets.css';
+@import './components/inputs/fig-assets.css';
+@import './components/content/fig-assets.css';
+@import './components/navigation/fig-assets.css';
+@import './components/brand/fig-assets.css';
+@import './components/misc/fig-assets.css';

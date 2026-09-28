@@ -1,0 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@400;500;600&family=Space+Grotesk:wght@400;500;600&display=swap');
+/* SnowUI core face is Inter (exact match from Google Fonts).
+   Bai Jamjuree and Space Grotesk (alternate-face variable options) load from Google Fonts — the genuine families.
+   "SF Pro" appears in iOS/macOS material specimens — Apple-licensed, no webfont; falls back to the system -apple-system stack (renders natively on Macs). Download from developer.apple.com/fonts and upload here to embed it. */
+:root{--font-body:'Inter',-apple-system,BlinkMacSystemFont,'SF Pro','Segoe UI',sans-serif}
+body{font-family:var(--font-body)}

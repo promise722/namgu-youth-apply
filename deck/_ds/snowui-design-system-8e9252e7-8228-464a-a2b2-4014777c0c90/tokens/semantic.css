@@ -1,0 +1,38 @@
+/* Semantic aliases over the raw Figma variables (tokens/fig-tokens.css) */
+:root{
+--text-primary:var(--black-100);
+--text-secondary:var(--black-40);
+--text-tertiary:var(--black-20);
+--text-inverse:var(--white-100);
+--surface-page:var(--background-1);
+--surface-card:var(--background-2);
+--surface-hover:var(--black-4);
+--surface-selected:var(--black-5);
+--border-subtle:var(--black-10);
+--border-strong:var(--black-20);
+--accent-brand:var(--primary-brand);
+--accent-blue-tint:var(--primary-blue);
+--accent-purple-tint:var(--primary-purple);
+--accent-light:var(--primary-light);
+--chart-blue:var(--secondary-blue);
+--chart-indigo:var(--secondary-indigo);
+--chart-cyan:var(--secondary-cyan);
+--chart-mint:var(--secondary-mint);
+--chart-green:var(--secondary-green);
+--chart-purple:var(--secondary-purple);
+--chart-orange:var(--secondary-orange);
+--chart-yellow:var(--secondary-yellow);
+--chart-red:var(--secondary-red);
+--radius-card:20px;
+--radius-control:calc(var(--radius-8) * 1px);
+--radius-chip:calc(var(--radius-4) * 1px);
+--space-1:calc(var(--4) * 1px);
+--space-2:calc(var(--8) * 1px);
+--space-3:calc(var(--12) * 1px);
+--space-4:calc(var(--16) * 1px);
+--space-5:calc(var(--20) * 1px);
+--space-6:calc(var(--24) * 1px);
+--space-7:calc(var(--28) * 1px);
+}
+a{color:var(--secondary-blue-4,#007aff);text-decoration:none}
+a:hover{color:var(--black-100,#1c1c1c)}
