@@ -1,4 +1,4 @@
-const CACHE = 'namgu-apply-v7';
+const CACHE = 'namgu-apply-v8';
 const SHELL = [
   './', './index.html', './styles.css', './app.js', './data.js', './manifest.webmanifest',
   './icons/icon-192.png', './icons/icon-512.png', './icons/icon-512-maskable.png', './map3d/index.html'
@@ -15,23 +15,17 @@ self.addEventListener('activate', (e) => {
   );
 });
 
-// App shell: cache-first. Fonts/CDN: stale-while-revalidate. Others: network-first with cache fallback.
+// App shell: network-first. Fonts/CDN: stale-while-revalidate. Others: network-first with cache fallback.
 self.addEventListener('fetch', (e) => {
   const req = e.request;
   if (req.method !== 'GET') return;
   const url = new URL(req.url);
-  if (url.origin === location.origin && url.pathname.includes('/deck/')) {
-    // 발표 덱: 최신본 우선, 오프라인이면 캐시
+  if (url.origin === location.origin) {
+    // 같은 출처: 최신본 우선, 오프라인이면 캐시 (수정 배포가 바로 보이도록)
     e.respondWith(fetch(req).then((res) => {
       if (res.ok) { const copy = res.clone(); caches.open(CACHE).then((c) => c.put(req, copy)); }
       return res;
-    }).catch(() => caches.match(req, { ignoreSearch: true })));
-    return;
-  }
-  if (url.origin === location.origin) {
-    e.respondWith(caches.match(req, { ignoreSearch: true }).then((hit) => hit || fetch(req).then((res) => {
-      const copy = res.clone(); caches.open(CACHE).then((c) => c.put(req, copy)); return res;
-    }).catch(() => caches.match('./index.html'))));
+    }).catch(() => caches.match(req, { ignoreSearch: true }).then((hit) => hit || caches.match('./index.html'))));
     return;
   }
   e.respondWith(caches.open(CACHE).then(async (c) => {
