@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="./support.js"></script>
+<script src="./deck-extras.js" defer></script>
 </head>
 <body>
 <x-dc>
@@ -28,6 +29,12 @@
   deck-stage section h1, deck-stage section h2, deck-stage section p { text-wrap: balance; }
   deck-stage section p { text-wrap: pretty; }
   deck-stage section h1, deck-stage section h2 { text-wrap: balance; }
+
+  /* 2차 수정: 줄 길이를 고르게, 마지막 줄에 한두 글자만 남지 않게 */
+  deck-stage section, deck-stage section * { text-wrap: pretty; }
+  deck-stage section h1, deck-stage section h2, deck-stage section [data-wrap="balance"] { text-wrap: balance; }
+  deck-stage section [data-wrap="pretty"], deck-stage section [data-wrap="pretty"] * { text-wrap: pretty; }
+  [data-qr-scan] { cursor: pointer; }
 </style>
 </helmet>
 <x-import component-from-global-scope="deck-stage" from="./deck-stage.js" width="1920" height="1080" hint-size="100%,100%">
@@ -60,11 +67,11 @@
       <div style="display: flex; flex-direction: column; gap: 24px; border-top: 3px solid var(--blue); padding-top: 36px;"><span style="font-size: 96px; line-height: 1; font-weight: 700; letter-spacing: -0.027em;">쓰고</span><span style="font-family: var(--font-num); font-size: var(--type-sub); font-weight: 600; color: var(--blue);">최대 200만 원</span><span style="font-size: var(--type-body); line-height: 1.45; color: var(--mute);">외부 전문가 계획서 심사 후 실제 광고비로 집행</span></div>
       <div style="display: flex; flex-direction: column; gap: 24px; border-top: 3px solid var(--blue); padding-top: 36px;"><span style="font-size: 96px; line-height: 1; font-weight: 700; letter-spacing: -0.027em;">증명한다</span><span style="font-family: var(--font-num); font-size: var(--type-sub); font-weight: 600; color: var(--blue);">매출 · 유입 · 전환</span><span style="font-size: var(--type-body); line-height: 1.45; color: var(--mute);">수치 성과 필수 결과보고서, 6개월 후 지속 여부 추적</span></div>
     </div>
-    <span style="position: absolute; right: var(--pad-x); bottom: 44px; font-size: 24px; line-height: 1.4; color: var(--mute);">근거: 정책제안서 V1.3(2026. 9. 27.) 및 자문 반영본</span>
+    <span style="position: absolute; right: var(--pad-x); bottom: 44px; font-size: 24px; line-height: 1.4; color: var(--mute);">근거: 정책제안서 V1.4(2026. 9. 28.) 및 자문 반영본</span>
   </section>
 
   <section data-label="제안배경 · 논리" data-screen-label="03" data-speaker-notes="제안 배경을 여섯 단계로 말씀드립니다. 남구 청년 창업은 생활형이고, 생활형은 빨리 바뀌고, 빽빽하게 경쟁하고, 마케팅을 더 어려워합니다. 부산은 디지털 도구를 가장 안 쓰면서 가장 쓰고 싶어 하고, 손님의 선택은 이미 플랫폼으로 옮겨 갔습니다. 그래서 가르치고, 써 보게 하고, 수치로 검증합니다." style="background: var(--bg2); color: var(--ink); display: flex; flex-direction: column; justify-content: flex-start; padding: 96px var(--pad-x) var(--pad-bottom); box-sizing: border-box; font-family: var(--font-kr);">
-    <span style="font-size: var(--type-small); color: var(--blue); font-weight: 600;">제안배경</span>
+    <span style="font-size: var(--type-small); color: var(--blue); font-weight: 600;">1-1. 제안배경_개요 - 왜 남구·생활형·마케팅인가</span>
     <h2 style="margin: 24px 0 0; font-size: var(--type-title); line-height: 1.2; font-weight: 700; letter-spacing: -0.027em;">왜 남구, 왜 생활형, 왜 마케팅인가</h2>
     <div style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 16px; margin-top: 48px;">
       <div style="display: flex; flex-direction: column; gap: 14px; background: var(--bg); border-radius: 20px; padding: 24px 22px; min-height: 380px; box-sizing: border-box;"><span style="align-self: flex-start; font-family: var(--font-num); font-size: 24px; font-weight: 600; color: var(--mute); border: 1px solid var(--line); border-radius: 999px; padding: 2px 12px;">1</span><span style="font-family: var(--font-num); font-size: 88px; line-height: 1; font-weight: 700; letter-spacing: -0.02em;">78<span style="font-size: 40px;">%</span></span><span style="font-size: var(--type-small); line-height: 1.35; flex: 1;">남구 청년 사업자는 소매·서비스·음식업</span><span style="align-self: flex-start; font-size: 24px; font-weight: 600; color: #FFFFFF; background: #004090; border-radius: 6px; padding: 3px 10px;">남구 실측</span></div>
@@ -80,7 +87,7 @@
   </section>
 
   <section data-label="제안배경 · 남구 청년 사업자" data-screen-label="04" data-speaker-notes="왜 남구인가. 남구 전체 사업자는 1년 새 1.2% 늘었는데, 30세 미만은 8.6% 줄었습니다. 부산 전체 −7.0%, 전국 −4.4%보다 가파릅니다. 39세 이하 비중 16.1%는 부산 15.0%와 큰 차이가 아닙니다. 핵심은 감소 추세입니다. 그래서 진입이 아니라 지속과 성장을 돕는 지원, 예비창업가가 아닌 기창업가가 대상입니다." style="background: var(--bg); color: var(--ink); display: flex; flex-direction: column; justify-content: flex-start; padding: 96px var(--pad-x) var(--pad-bottom); box-sizing: border-box; font-family: var(--font-kr);">
-    <span style="font-size: var(--type-small); color: var(--blue); font-weight: 600;">제안배경 · 남구 청년 사업자</span>
+    <span style="font-size: var(--type-small); color: var(--blue); font-weight: 600;">1-2. 제안배경_원인1 - 남구 청년 사업자 감소</span>
     <h2 style="margin: 24px 0 0; font-size: var(--type-title); line-height: 1.2; font-weight: 700; letter-spacing: -0.027em;">남구 사업자는 늘었지만, 청년층만 줄고 있다</h2>
     <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 48px; margin-top: 40px;">
       <div style="display: flex; flex-direction: column; gap: 14px; border-left: 3px solid var(--orange); padding-left: 28px;"><span style="font-family: var(--font-num); font-size: 110px; line-height: 1; font-weight: 700; letter-spacing: -0.02em; color: var(--orange);">−8.6<span style="font-size: 52px;">%</span></span><span style="font-size: var(--type-small); line-height: 1.4;">남구 30세 미만 사업자 · 전년 동월 대비</span></div>
@@ -109,8 +116,8 @@
 
   <section data-label="제안배경 · 교체 속도" data-screen-label="05" data-speaker-notes="남구 음식업은 한 해 438곳이 생기고 524곳이 사라졌습니다. 순감 86곳. 여섯 곳 중 한 곳이 바뀌는 속도입니다. 소매업도 15%. 제조업이나 부동산은 그 절반 이하입니다." style="background: var(--bg); color: var(--ink); display: grid; grid-template-columns: 1fr 1.25fr; align-items: start; gap: 80px; padding: 96px var(--pad-x) var(--pad-bottom); box-sizing: border-box; font-family: var(--font-kr);">
     <div style="display: flex; flex-direction: column;">
-      <span style="font-size: var(--type-small); color: var(--blue); font-weight: 600;">제안배경 · 교체 속도</span>
-      <h2 style="margin: 24px 0 0; font-size: var(--type-title); line-height: 1.2; font-weight: 700; letter-spacing: -0.027em;">남구 생활형 업종은 1년에 6곳 중 1곳이 바뀐다</h2>
+      <span style="font-size: var(--type-small); color: var(--blue); font-weight: 600;">1-3. 제안배경_원인2 - 생활형 업종의 빠른 교체</span>
+      <h2 style="margin: 24px 0 0; font-size: 66px; line-height: 1.2; font-weight: 700; letter-spacing: -0.027em;"><span style="white-space: nowrap;">생활형 업종은 해마다</span> <span style="white-space: nowrap;">6곳 중 1곳이 바뀐다</span></h2>
       <div style="display: flex; gap: 40px; margin-top: 48px; font-family: var(--font-num);">
         <div style="display: flex; flex-direction: column; gap: 6px;"><span style="font-size: 72px; font-weight: 700; line-height: 1; color: var(--mint);">438</span><span style="font-size: 24px; color: var(--mute); font-family: var(--font-kr);">음식업 1년 내 진입</span></div>
         <div style="display: flex; flex-direction: column; gap: 6px;"><span style="font-size: 72px; font-weight: 700; line-height: 1; color: var(--orange);">524</span><span style="font-size: 24px; color: var(--mute); font-family: var(--font-kr);">추정 퇴출</span></div>
@@ -132,7 +139,7 @@
   </section>
 
   <section data-label="제안배경 · 경쟁 밀도" data-screen-label="06" data-speaker-notes="9,532개 업소 좌표를 분석했습니다. 남구 백반집 한 곳에서 반경 300미터 안에 다른 백반집이 중앙값 30곳, 미용실 22곳, 카페 16곳. 가장 가까운 동종 점포까지 23미터입니다." style="background: var(--bg2); color: var(--ink); display: flex; flex-direction: column; justify-content: flex-start; padding: 96px var(--pad-x) var(--pad-bottom); box-sizing: border-box; font-family: var(--font-kr);">
-    <span style="font-size: var(--type-small); color: var(--blue); font-weight: 600;">제안배경 · 경쟁 밀도</span>
+    <span style="font-size: var(--type-small); color: var(--blue); font-weight: 600;">1-4. 제안배경_원인3 - 동종 점포 밀집</span>
     <h2 style="margin: 24px 0 0; font-size: var(--type-title); line-height: 1.2; font-weight: 700; letter-spacing: -0.027em;">걸어서 5분 안에 같은 업종이 수십 곳</h2>
     <div style="display: grid; grid-template-columns: 1fr 1.15fr; gap: 80px; margin-top: 28px; align-items: center;">
       <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;">
@@ -169,7 +176,7 @@
 
   <section data-label="제안배경 · 3D 지도" data-screen-label="07" data-speaker-notes="행정동별로 보면, 규모는 대연3동이 2,383개로 남구의 25%. 생활형 비중은 용호 권역이 높습니다. 용호2동 80.9%, 용호3동 78.9%, 용호1동 76.8%. 교육 장소와 홍보 거점을 정하는 근거입니다." style="background: var(--bg); color: var(--ink); display: grid; grid-template-columns: 1.35fr 1fr; align-items: start; gap: 72px; padding: 96px var(--pad-x) var(--pad-bottom); box-sizing: border-box; font-family: var(--font-kr);">
     <div style="display: flex; flex-direction: column; gap: 20px;">
-      <span style="font-size: var(--type-small); color: var(--blue); font-weight: 600;">제안배경 · 행정동별 업종·업소 3D 지도</span>
+      <span style="font-size: var(--type-small); color: var(--blue); font-weight: 600;">1-5. 제안배경_현황 - 행정동별 업종·업소 분포</span>
       <h2 style="margin: 4px 0 8px; font-size: var(--type-title); line-height: 1.2; font-weight: 700; letter-spacing: -0.027em;">규모는 대연3동, 생활형 비중은 용호 권역</h2>
       <div style="width: 100%; height: 480px; border-radius: 20px; overflow: hidden; background: var(--bg2);"><div style="position: relative; width: 100%; height: 100%; background: url(assets/map3d.png) center / contain no-repeat;"><iframe src="../map3d/" title="남구 행정동별 3D 지도" loading="lazy" style="position: absolute; left: 0; top: 0; width: 160%; height: 160%; border: 0; transform: scale(0.625); transform-origin: 0 0;"></iframe></div></div>
       <span style="font-size: 24px; color: var(--mute); line-height: 1.4;">기둥 높이 = 행정동 상가업소 수 · 색 = 업종 대분류 · 끌어서 회전·확대 · <a href="../map3d/" target="_blank" rel="noopener" style="color: var(--blue); font-weight: 600;">전체 화면으로 열기</a></span>
@@ -192,7 +199,7 @@
   </section>
 
   <section data-label="제안배경 · 마케팅 애로" data-screen-label="08" data-speaker-notes="업종별로 보면 더 분명합니다. 음식점업은 자금 애로가 23.7%인데 마케팅 애로는 65.6%. 도소매 67.8%, 개인서비스 67.7%. 제조업만 격차가 작습니다. 30대 대표자는 71.2%인데, 남구 39세 이하 사업자의 78%가 30대입니다." style="background: var(--bg2); color: var(--ink); display: flex; flex-direction: column; justify-content: flex-start; padding: 96px var(--pad-x) var(--pad-bottom); box-sizing: border-box; font-family: var(--font-kr);">
-    <span style="font-size: var(--type-small); color: var(--blue); font-weight: 600;">제안배경 · 마케팅 애로</span>
+    <span style="font-size: var(--type-small); color: var(--blue); font-weight: 600;">1-6. 제안배경_원인4 - 마케팅 애로 1순위</span>
     <h2 style="margin: 24px 0 0; font-size: var(--type-title); line-height: 1.2; font-weight: 700; letter-spacing: -0.027em;">생활형일수록 마케팅을 더 어려워한다</h2>
     <div style="display: grid; grid-template-columns: 1.5fr 1fr; gap: 80px; margin-top: 36px; align-items: center;">
       <div style="display: flex; flex-direction: column; gap: 14px;">
@@ -217,7 +224,7 @@
   </section>
 
   <section data-label="제안배경 · 부산" data-screen-label="09" data-speaker-notes="부산 소상공인은 디지털 활동이 없다는 응답이 97.1%로 전국 72.8%, 서울 63.6%보다 높습니다. 그런데 도입 의향은 43.6%로 전국 9.2%의 다섯 배. 가장 안 쓰고, 가장 쓰고 싶어 합니다. 시도별 업종 수치는 표본이 작아 오차가 큽니다." style="background: var(--bg); color: var(--ink); display: flex; flex-direction: column; justify-content: flex-start; padding: 96px var(--pad-x) var(--pad-bottom); box-sizing: border-box; font-family: var(--font-kr);">
-    <span style="font-size: var(--type-small); color: var(--blue); font-weight: 600;">제안배경 · 부산의 디지털 활용과 의향</span>
+    <span style="font-size: var(--type-small); color: var(--blue); font-weight: 600;">1-7. 제안배경_원인5 - 낮은 디지털 활용, 높은 도입 의향</span>
     <h2 style="margin: 24px 0 0; font-size: var(--type-title); line-height: 1.2; font-weight: 700; letter-spacing: -0.027em;">부산은 가장 안 쓰고, 가장 쓰고 싶어 한다</h2>
     <div style="display: grid; grid-template-columns: 1fr 1.2fr; gap: 80px; margin-top: 36px; align-items: end;">
       <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 48px;">
@@ -239,56 +246,43 @@
   </section>
 
   <section data-label="제안배경 · 채널" data-screen-label="10" data-speaker-notes="네이버 검색 관심도 7년치를 분석했습니다. 사장님 쪽에서는 당근 광고와 네이버 플레이스 검색만 꾸준히 늘었고, 일반적인 마케팅 교육 검색은 줄었습니다. 손님 쪽에서는 리뷰와 예약 검색이 크게 늘었습니다. 다만 남구 맛집과 카페 검색은 줄었는데, 지도 앱이나 SNS로 옮겨 간 것으로 추정하지만 확인하지는 못했습니다. 참고로 폐업 관련 검색은 121%, 남구 생활서비스 검색은 68% 늘었습니다." style="background: var(--bg); color: var(--ink); display: flex; flex-direction: column; justify-content: flex-start; padding: 96px var(--pad-x) var(--pad-bottom); box-sizing: border-box; font-family: var(--font-kr);">
-    <span style="font-size: var(--type-small); color: var(--blue); font-weight: 600;">제안배경</span>
+    <span style="font-size: var(--type-small); color: var(--blue); font-weight: 600;">1-8. 제안배경_원인6 - 지역 플랫폼으로 옮겨 간 검색</span>
     <h2 style="margin: 24px 0 0; font-size: var(--type-title); line-height: 1.2; font-weight: 700; letter-spacing: -0.027em;">손님의 선택은 플랫폼으로 옮겨 갔다</h2>
     <span style="margin-top: 16px; font-size: var(--type-small); color: var(--mute);">네이버 검색 관심도 7년치(2019. 9.~2026. 8.)로 본 사장님과 손님의 변화</span>
-    <div style="display: grid; grid-template-columns: 1fr 1.1fr; gap: 64px; margin-top: 32px; align-items: start;">
+    <div style="display: grid; grid-template-columns: 1fr 1.1fr; gap: 64px; margin-top: 24px; align-items: start;">
       <div style="display: flex; flex-direction: column; gap: 14px;">
         <span style="font-size: var(--type-small); font-weight: 600;">사장님 쪽 · 마케팅 채널 검색</span>
-        <div style="border-radius: 16px; overflow: hidden; background: var(--bg2); height: 300px;"><img src="assets/trend-panels.svg" alt="키워드별 검색 관심도 추세 패널" style="width: 100%; height: 100%; display: block; object-fit: cover;"></div>
-        <div style="display: grid; grid-template-columns: 1.7fr 1fr 0.8fr 1.1fr; gap: 12px; padding: 8px 0; border-bottom: 2px solid var(--line); font-size: 24px; color: var(--mute);"><span>키워드</span><span>연간 변화</span><span>방향</span><span>믿을 만한가</span></div>
-        <div style="display: grid; grid-template-columns: 1.7fr 1fr 0.8fr 1.1fr; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--line); font-size: 24px;"><span style="font-weight: 600;">당근 광고</span><span style="font-family: var(--font-num); white-space: nowrap;">+14.7</span><span style="color: var(--mint); font-weight: 600;">상승</span><span style="font-weight: 600;">매우 뚜렷</span></div>
-        <div style="display: grid; grid-template-columns: 1.7fr 1fr 0.8fr 1.1fr; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--line); font-size: 24px;"><span style="font-weight: 600;">네이버 플레이스 <span style="font-weight: 400; color: var(--mute); white-space: nowrap;">(최근 3년)</span></span><span style="font-family: var(--font-num); white-space: nowrap;">+3.4</span><span style="color: var(--mint); font-weight: 600;">상승</span><span>뚜렷</span></div>
-        <div style="display: grid; grid-template-columns: 1.7fr 1fr 0.8fr 1.1fr; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--line); font-size: 24px;"><span style="font-weight: 600;">마케팅 교육</span><span style="font-family: var(--font-num); white-space: nowrap;">−5.5</span><span style="color: var(--orange); font-weight: 600;">하락</span><span>뚜렷</span></div>
-        <p style="margin: 4px 0 0; font-size: 24px; line-height: 1.4; color: var(--mute); text-wrap: pretty;">읽는 법: "믿을 만한가"는 우연히 생긴 변화일 가능성이 0.1% 미만(<span style="white-space: nowrap;">p&lt;0.001</span>)이라는 뜻이다. 당근 광고는 7년 동안 거의 매달 꾸준히 올랐다(일관성 <span style="white-space: nowrap;">τ=0.92</span>, 1에 가까울수록 한 방향).</p>
+        <div style="border-radius: 16px; overflow: hidden; background: var(--bg2); height: 210px;"><img src="assets/trend-panels.svg" alt="키워드별 검색 관심도 추세 패널" style="width: 100%; height: 100%; display: block; object-fit: cover;"></div>
+        <div style="display: grid; grid-template-columns: 1.35fr 0.75fr 1.05fr 1.35fr; gap: 12px; padding: 8px 0; border-bottom: 2px solid var(--line); font-size: 24px; color: var(--mute);"><span>키워드</span><span>연간 변화</span><span>방향<span style="font-size: 18px; font-weight: 400; color: var(--mute); white-space: nowrap;"> (τ)</span></span><span>믿을 만한가<span style="font-size: 18px; font-weight: 400; color: var(--mute); white-space: nowrap;"> (p)</span></span></div>
+        <div style="display: grid; grid-template-columns: 1.35fr 0.75fr 1.05fr 1.35fr; gap: 12px; padding: 6px 0; border-bottom: 1px solid var(--line); font-size: 24px; align-items: baseline;"><span style="font-weight: 600;">당근 광고</span><span style="font-family: var(--font-num); white-space: nowrap;">+14.7</span><span style="color: var(--mint); font-weight: 600; white-space: nowrap;">상승<span style="font-size: 18px; font-weight: 400; color: var(--mute); white-space: nowrap;"> (τ=0.92)</span></span><span style="font-weight: 600; white-space: nowrap;">매우 뚜렷<span style="font-size: 18px; font-weight: 400; color: var(--mute); white-space: nowrap;"> (p&lt;0.001)</span></span></div>
+        <div style="display: grid; grid-template-columns: 1.35fr 0.75fr 1.05fr 1.35fr; gap: 12px; padding: 6px 0; border-bottom: 1px solid var(--line); font-size: 24px; align-items: baseline;"><span style="font-weight: 600;">네이버 플레이스</span><span style="font-family: var(--font-num); white-space: nowrap;">+3.4</span><span style="color: var(--mint); font-weight: 600; white-space: nowrap;">상승<span style="font-size: 18px; font-weight: 400; color: var(--mute); white-space: nowrap;"> (최근 3년)</span></span><span style="white-space: nowrap;">뚜렷<span style="font-size: 18px; font-weight: 400; color: var(--mute); white-space: nowrap;"> (p&lt;0.001)</span></span></div>
+        <div style="display: grid; grid-template-columns: 1.35fr 0.75fr 1.05fr 1.35fr; gap: 12px; padding: 6px 0; border-bottom: 1px solid var(--line); font-size: 24px; align-items: baseline;"><span style="font-weight: 600;">마케팅 교육</span><span style="font-family: var(--font-num); white-space: nowrap;">−5.5</span><span style="color: var(--orange); font-weight: 600; white-space: nowrap;">하락<span style="font-size: 18px; font-weight: 400; color: var(--mute); white-space: nowrap;"> (τ=−0.51)</span></span><span style="white-space: nowrap;">뚜렷<span style="font-size: 18px; font-weight: 400; color: var(--mute); white-space: nowrap;"> (p&lt;0.001)</span></span></div>
+        <p data-wrap="pretty" style="margin: 2px 0 0; font-size: 18px; line-height: 1.45; color: var(--mute);">읽는 법 · p는 우연히 생긴 변화일 가능성으로, 0.001 미만이면 0.1%도 안 된다는 뜻이다. τ는 한 방향으로 꾸준히 움직인 정도로, 1에 가까울수록 꾸준한 상승, −1에 가까울수록 꾸준한 하락이다. 네이버 플레이스는 7년 전체로는 뚜렷하지 않고(τ=0.10) 최근 3년만 뚜렷하다.</p>
       </div>
       <div style="display: flex; flex-direction: column; gap: 14px;">
         <span style="font-size: var(--type-small); font-weight: 600;">손님 쪽 · 가게 찾는 검색</span>
         <div style="display: grid; grid-template-columns: 280px 1fr; gap: 20px; font-size: 24px; color: var(--mute); padding-bottom: 6px; border-bottom: 2px solid var(--line);"><span>키워드 그룹</span><div style="display: grid; grid-template-columns: 1fr 3fr;"><span style="text-align: right; padding-right: 8px;">하락</span><span style="padding-left: 8px;">상승 →</span></div></div>
-        <div style="display: grid; grid-template-columns: 280px 1fr; gap: 20px; align-items: center;"><div style="display: flex; flex-direction: column; gap: 2px;"><span style="font-size: 24px; font-weight: 600;">가게 리뷰·예약</span><span style="font-size: 24px; color: var(--mute);">네이버 예약, 영수증 리뷰</span></div><div style="display: grid; grid-template-columns: 1fr 3fr; height: 64px;"><div style="border-right: 2px solid var(--line);"></div><div style="display: flex; align-items: center; gap: 12px;"><div style="height: 30px; width: 100%; background: var(--blue); border-radius: 0 6px 6px 0;"></div><div style="display: flex; flex-direction: column; gap: 2px; flex: none;"><span style="font-family: var(--font-num); font-size: 24px; font-weight: 700; white-space: nowrap;">+628% 상승</span><span style="font-size: 24px; color: var(--mute); white-space: nowrap;">출발값이 낮아 증가율이 크게 보임</span></div></div></div></div>
-        <div style="display: grid; grid-template-columns: 280px 1fr; gap: 20px; align-items: center;"><div style="display: flex; flex-direction: column; gap: 2px;"><span style="font-size: 24px; font-weight: 600;">남구 미용·뷰티</span><span style="font-size: 24px; color: var(--mute);">경성대·대연동 미용실·네일</span></div><div style="display: grid; grid-template-columns: 1fr 3fr; height: 64px;"><div style="border-right: 2px solid var(--line);"></div><div style="display: flex; align-items: center; gap: 12px;"><div style="height: 30px; width: 5.1%; background: var(--blue); border-radius: 0 6px 6px 0;"></div><span style="font-family: var(--font-num); font-size: 24px; font-weight: 700; white-space: nowrap;">+32% 상승</span></div></div></div>
-        <div style="display: grid; grid-template-columns: 280px 1fr; gap: 20px; align-items: center;"><div style="display: flex; flex-direction: column; gap: 2px;"><span style="font-size: 24px; font-weight: 600;">남구 맛집</span><span style="font-size: 24px; color: var(--mute);">경성대·대연동 맛집</span></div><div style="display: grid; grid-template-columns: 1fr 3fr; height: 64px;"><div style="display: flex; justify-content: flex-end; align-items: center; border-right: 2px solid var(--line);"><div style="height: 30px; width: 9.1%; background: var(--orange); border-radius: 6px 0 0 6px;"></div></div><div style="display: flex; align-items: center; gap: 12px; padding-left: 12px;"><span style="font-family: var(--font-num); font-size: 24px; font-weight: 700; color: var(--orange); white-space: nowrap;">−19% 하락</span><span style="font-size: 24px; color: var(--mute); white-space: nowrap;">지도 앱·SNS 이동 추정, 미확인</span></div></div></div>
-        <div style="display: grid; grid-template-columns: 280px 1fr; gap: 20px; align-items: center;"><div style="display: flex; flex-direction: column; gap: 2px;"><span style="font-size: 24px; font-weight: 600;">남구 카페</span></div><div style="display: grid; grid-template-columns: 1fr 3fr; height: 64px;"><div style="display: flex; justify-content: flex-end; align-items: center; border-right: 2px solid var(--line);"><div style="height: 30px; width: 18.2%; background: var(--orange); border-radius: 6px 0 0 6px;"></div></div><div style="display: flex; align-items: center; gap: 12px; padding-left: 12px;"><span style="font-family: var(--font-num); font-size: 24px; font-weight: 700; color: var(--orange); white-space: nowrap;">−38% 하락</span><span style="font-size: 24px; color: var(--mute); white-space: nowrap;">지도 앱·SNS 이동 추정, 미확인</span></div></div></div>
-        <div style="margin-top: 12px; background: var(--ink); color: var(--bg); border-radius: 16px; padding: 18px 28px; font-size: var(--type-body); font-weight: 700; line-height: 1.4; text-wrap: balance;">사장님은 지역 채널(당근·플레이스)을 찾고, 손님은 리뷰와 예약으로 가게를 고른다.</div>
-      </div>
-    </div>
-    <div style="display: none; grid-template-columns: 1fr 1fr; gap: 120px; margin-top: 64px;">
-      <div style="display: flex; flex-direction: column; gap: 32px;">
-        <span style="font-size: var(--type-small); font-weight: 600; color: var(--mint);">상승</span>
-        <div style="display: flex; flex-direction: column; gap: 12px;"><div style="display: flex; justify-content: space-between; font-size: var(--type-body); font-weight: 600;"><span>당근 광고</span><span style="font-family: var(--font-num); color: var(--mint);">+42%</span></div><div style="height: 28px; background: var(--line); border-radius: 8px; overflow: hidden;"><div style="width: 62%; height: 100%; background: var(--mint);"></div></div></div>
-        <div style="display: flex; flex-direction: column; gap: 12px;"><div style="display: flex; justify-content: space-between; font-size: var(--type-body); font-weight: 600;"><span>네이버 플레이스</span><span style="font-family: var(--font-num); color: var(--mint);">+10%</span></div><div style="height: 28px; background: var(--line); border-radius: 8px; overflow: hidden;"><div style="width: 15%; height: 100%; background: var(--mint);"></div></div></div>
-      </div>
-      <div style="display: flex; flex-direction: column; gap: 32px;">
-        <span style="font-size: var(--type-small); font-weight: 600; color: var(--orange);">하락</span>
-        <div style="display: flex; flex-direction: column; gap: 12px;"><div style="display: flex; justify-content: space-between; font-size: var(--type-body); font-weight: 600;"><span>인스타그램 광고</span><span style="font-family: var(--font-num); color: var(--orange);">−55%</span></div><div style="height: 28px; background: var(--line); border-radius: 8px; overflow: hidden;"><div style="width: 81%; height: 100%; background: var(--orange);"></div></div></div>
-        <div style="display: flex; flex-direction: column; gap: 12px;"><div style="display: flex; justify-content: space-between; font-size: var(--type-body); font-weight: 600;"><span>소상공인 마케팅</span><span style="font-family: var(--font-num); color: var(--orange);">−68%</span></div><div style="height: 28px; background: var(--line); border-radius: 8px; overflow: hidden;"><div style="width: 100%; height: 100%; background: var(--orange);"></div></div></div>
-        <div style="display: flex; flex-direction: column; gap: 12px;"><div style="display: flex; justify-content: space-between; font-size: var(--type-body); font-weight: 600;"><span>마케팅 교육</span><span style="font-family: var(--font-num); color: var(--orange);">−64%</span></div><div style="height: 28px; background: var(--line); border-radius: 8px; overflow: hidden;"><div style="width: 94%; height: 100%; background: var(--orange);"></div></div></div>
+        <div style="display: grid; grid-template-columns: 280px 1fr; gap: 20px; align-items: center;"><div style="display: flex; flex-direction: column; gap: 2px;"><span style="font-size: 24px; font-weight: 600;">가게 리뷰·예약</span><span style="font-size: 24px; color: var(--mute);">네이버 예약, 영수증 리뷰</span></div><div style="display: grid; grid-template-columns: 1fr 3fr; height: 58px;"><div style="border-right: 2px solid var(--line);"></div><div style="display: flex; align-items: center; gap: 12px;"><div style="height: 30px; width: 100%; background: var(--blue); border-radius: 0 6px 6px 0;"></div><div style="display: flex; flex-direction: column; gap: 2px; flex: none;"><span style="font-family: var(--font-num); font-size: 24px; font-weight: 700; white-space: nowrap;">+628% 상승</span><span style="font-size: 24px; color: var(--mute); white-space: nowrap;">출발값이 낮아 증가율이 크게 보임</span></div></div></div></div>
+        <div style="display: grid; grid-template-columns: 280px 1fr; gap: 20px; align-items: center;"><div style="display: flex; flex-direction: column; gap: 2px;"><span style="font-size: 24px; font-weight: 600;">남구 미용·뷰티</span><span style="font-size: 24px; color: var(--mute);">경성대·대연동 미용실·네일</span></div><div style="display: grid; grid-template-columns: 1fr 3fr; height: 58px;"><div style="border-right: 2px solid var(--line);"></div><div style="display: flex; align-items: center; gap: 12px;"><div style="height: 30px; width: 5.1%; background: var(--blue); border-radius: 0 6px 6px 0;"></div><span style="font-family: var(--font-num); font-size: 24px; font-weight: 700; white-space: nowrap;">+32% 상승</span></div></div></div>
+        <div style="display: grid; grid-template-columns: 280px 1fr; gap: 20px; align-items: center;"><div style="display: flex; flex-direction: column; gap: 2px;"><span style="font-size: 24px; font-weight: 600;">남구 맛집</span><span style="font-size: 24px; color: var(--mute);">경성대·대연동 맛집</span></div><div style="display: grid; grid-template-columns: 1fr 3fr; height: 58px;"><div style="display: flex; justify-content: flex-end; align-items: center; border-right: 2px solid var(--line);"><div style="height: 30px; width: 9.1%; background: var(--orange); border-radius: 6px 0 0 6px;"></div></div><div style="display: flex; align-items: center; gap: 12px; padding-left: 12px;"><span style="font-family: var(--font-num); font-size: 24px; font-weight: 700; color: var(--orange); white-space: nowrap;">−19% 하락</span><span style="font-size: 24px; color: var(--mute); white-space: nowrap;">지도 앱·SNS 이동 추정, 미확인</span></div></div></div>
+        <div style="display: grid; grid-template-columns: 280px 1fr; gap: 20px; align-items: center;"><div style="display: flex; flex-direction: column; gap: 2px;"><span style="font-size: 24px; font-weight: 600;">남구 카페</span></div><div style="display: grid; grid-template-columns: 1fr 3fr; height: 58px;"><div style="display: flex; justify-content: flex-end; align-items: center; border-right: 2px solid var(--line);"><div style="height: 30px; width: 18.2%; background: var(--orange); border-radius: 6px 0 0 6px;"></div></div><div style="display: flex; align-items: center; gap: 12px; padding-left: 12px;"><span style="font-family: var(--font-num); font-size: 24px; font-weight: 700; color: var(--orange); white-space: nowrap;">−38% 하락</span><span style="font-size: 24px; color: var(--mute); white-space: nowrap;">지도 앱·SNS 이동 추정, 미확인</span></div></div></div>
+        <div style="margin-top: 8px; background: var(--ink); color: var(--bg); border-radius: 16px; padding: 16px 28px; font-size: 30px; font-weight: 700; line-height: 1.4; text-wrap: balance;">사장님은 지역 채널(당근·플레이스)을 찾고, 손님은 리뷰와 예약으로 가게를 고른다.</div>
       </div>
     </div>
     <span style="position: absolute; right: var(--pad-x); bottom: 44px; font-size: 24px; line-height: 1.4; color: var(--mute);">근거: 네이버 데이터랩 검색어 트렌드 2019. 9.~2026. 8. · 분석 방법은 붙임 정량분석 보고서</span>
   </section>
 
   <section data-label="제안배경 · 수요" data-screen-label="11" data-speaker-notes="잠재 수요는 범위로 말씀드립니다. 보수적으로 2,150명, 기본 3,000명, 참고 3,400명. 신청 예상 인원이 아니라 마케팅 애로를 겪는 모집단 추정입니다. 15명은 그 0.4~0.7%, 시범 규모입니다." style="background: var(--bg2); color: var(--ink); display: flex; flex-direction: column; justify-content: flex-start; padding: 96px var(--pad-x) var(--pad-bottom); box-sizing: border-box; font-family: var(--font-kr);">
-    <span style="font-size: var(--type-small); color: var(--blue); font-weight: 600;">제안배경</span>
+    <span style="font-size: var(--type-small); color: var(--blue); font-weight: 600;">1-9. 제안배경_결론 - 잠재 수요 추정</span>
     <h2 style="margin: 24px 0 0; font-size: var(--type-title); line-height: 1.2; font-weight: 700; letter-spacing: -0.027em;">잠재 수요 약 2,150~3,400명, 15명은 시범 규모</h2>
-    <div style="display: grid; grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr; align-items: center; gap: 24px; margin-top: 48px;">
-      <div style="display: flex; flex-direction: column; gap: 14px; background: var(--bg); border-radius: 24px; padding: 32px 36px; box-sizing: border-box;"><span style="font-family: var(--font-num); font-size: 84px; line-height: 1; font-weight: 700; letter-spacing: -0.02em;">6,024</span><span style="font-size: var(--type-small); line-height: 1.4;">남구 39세 이하 사업자</span><span style="font-size: 24px; color: var(--mint); font-weight: 600;">실측 · 국세청 2026. 6.</span></div>
-      <span style="font-size: var(--type-sub); color: var(--mute);">×</span>
-      <div style="display: flex; flex-direction: column; gap: 14px; background: var(--bg); border-radius: 24px; padding: 32px 36px; box-sizing: border-box;"><span style="font-family: var(--font-num); font-size: 84px; line-height: 1; font-weight: 700; letter-spacing: -0.02em;">78.0<span style="font-size: 44px;">%</span></span><span style="font-size: var(--type-small); line-height: 1.4;">소매·서비스·음식업 4,699명</span><span style="font-size: 24px; color: var(--mint); font-weight: 600;">실측 · 국세청 업태별</span></div>
-      <span style="font-size: var(--type-sub); color: var(--mute);">×</span>
-      <div style="display: flex; flex-direction: column; gap: 14px; background: var(--bg); border-radius: 24px; padding: 32px 36px; box-sizing: border-box;"><span style="font-family: var(--font-num); font-size: 84px; line-height: 1; font-weight: 700; letter-spacing: -0.02em;">63.9<span style="font-size: 44px;">%</span></span><span style="font-size: var(--type-small); line-height: 1.4;">마케팅 애로 비율</span><span style="font-size: 24px; color: var(--orange); font-weight: 600;">전국 표본 · 중기부 실태조사</span></div>
-      <span style="font-size: var(--type-sub); color: var(--mute);">=</span>
-      <div style="display: flex; flex-direction: column; gap: 14px; background: var(--mint); color: var(--bg); border-radius: 24px; padding: 32px 36px; box-sizing: border-box;"><span style="font-family: var(--font-num); font-size: 84px; line-height: 1; font-weight: 700; letter-spacing: -0.02em;">≈3,000</span><span style="font-size: var(--type-small); line-height: 1.4; font-weight: 600;">잠재 수요(애로 보유 추정) · 신청 예상 인원 아님</span><span style="font-size: 24px; font-weight: 600;">15명 = 범위의 0.4~0.7% → 수요 부족 가능성은 낮다</span></div>
+    <div style="display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr); align-items: stretch; gap: 24px; margin-top: 48px;">
+      <div style="display: flex; flex-direction: column; gap: 14px; background: var(--bg); border-radius: 24px; padding: 32px 32px; box-sizing: border-box; height: 300px; justify-content: flex-start;"><span style="font-family: var(--font-num); font-size: 76px; line-height: 1; font-weight: 700; white-space: nowrap; letter-spacing: -0.02em;">6,024</span><span style="font-size: var(--type-small); line-height: 1.4;">남구 39세 이하 사업자</span><span style="font-size: 24px; color: var(--mint); font-weight: 600;">실측 · 국세청 2026. 6.</span></div>
+      <span style="font-size: var(--type-sub); color: var(--mute); align-self: center;">×</span>
+      <div style="display: flex; flex-direction: column; gap: 14px; background: var(--bg); border-radius: 24px; padding: 32px 32px; box-sizing: border-box; height: 300px; justify-content: flex-start;"><span style="font-family: var(--font-num); font-size: 76px; line-height: 1; font-weight: 700; white-space: nowrap; letter-spacing: -0.02em;">78.0<span style="font-size: 44px;">%</span></span><span style="font-size: var(--type-small); line-height: 1.4;">소매·서비스·음식업 4,699명</span><span style="font-size: 24px; color: var(--mint); font-weight: 600;">실측 · 국세청 업태별</span></div>
+      <span style="font-size: var(--type-sub); color: var(--mute); align-self: center;">×</span>
+      <div style="display: flex; flex-direction: column; gap: 14px; background: var(--bg); border-radius: 24px; padding: 32px 32px; box-sizing: border-box; height: 300px; justify-content: flex-start;"><span style="font-family: var(--font-num); font-size: 76px; line-height: 1; font-weight: 700; white-space: nowrap; letter-spacing: -0.02em;">63.9<span style="font-size: 44px;">%</span></span><span style="font-size: var(--type-small); line-height: 1.4;">마케팅 애로 비율</span><span style="font-size: 24px; color: var(--orange); font-weight: 600;">전국 표본 · 중기부 실태조사</span></div>
+      <span style="font-size: var(--type-sub); color: var(--mute); align-self: center;">=</span>
+      <div style="display: flex; flex-direction: column; gap: 14px; background: var(--mint); color: var(--bg); border-radius: 24px; padding: 32px 32px; box-sizing: border-box; height: 300px; justify-content: flex-start;"><span style="font-family: var(--font-num); font-size: 76px; line-height: 1; font-weight: 700; white-space: nowrap; letter-spacing: -0.02em;">≈3,000</span><span style="font-size: var(--type-small); line-height: 1.4; font-weight: 600;">잠재 수요 추정 · 신청 예상 인원 아님</span><span style="font-size: 24px; font-weight: 600;">15명은 범위의 0.4~0.7%</span></div>
     </div>
     <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 64px; margin-top: 40px; align-items: start;">
       <div style="display: flex; flex-direction: column;">
@@ -306,7 +300,7 @@
   </section>
 
   <section data-label="추진근거" data-screen-label="12" data-speaker-notes="추진 근거입니다. 남구 청년 기본 조례 제15조 능력개발, 제16조 고용확대, 제22조 행정적·재정적 지원, 제6조 청년정책연구. 상위 법령으로 청년기본법과 청년고용촉진 특별법을 병기합니다. 조문 번호는 2025년 4월 개정본 기준으로 제출 전 최종 확인합니다." style="background: var(--bg); color: var(--ink); display: flex; flex-direction: column; justify-content: flex-start; padding: 96px var(--pad-x) var(--pad-bottom); box-sizing: border-box; font-family: var(--font-kr);">
-    <span style="font-size: var(--type-small); color: var(--blue); font-weight: 600;">추진근거</span>
+    <span style="font-size: var(--type-small); color: var(--blue); font-weight: 600;">2. 추진근거 - 남구 청년 기본 조례</span>
     <h2 style="margin: 24px 0 0; font-size: var(--type-title); line-height: 1.2; font-weight: 700; letter-spacing: -0.027em;">「부산광역시 남구 청년 기본 조례」 4개 조문</h2>
     <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 40px; margin-top: 88px;">
       <div style="display: flex; flex-direction: column; gap: 20px; background: var(--bg2); border-radius: 24px; padding: 44px 40px; min-height: 280px; box-sizing: border-box;"><span style="font-family: var(--font-num); font-size: var(--type-title); font-weight: 700; line-height: 1;">제15조</span><span style="font-size: var(--type-body); font-weight: 600; line-height: 1.4;">능력개발 · 역량강화</span><span style="font-size: var(--type-small); color: var(--mute); line-height: 1.4;">마케팅 심화교육</span></div>
@@ -320,8 +314,8 @@
 
   <section data-label="추진계획 1" data-screen-label="13" data-speaker-notes="추진 계획입니다. 왜 15명인가. 이탈률 20%를 가정하면 15명일 때 결과보고서 10건을 확보할 확률이 94%입니다. 12명이면 56%로 떨어지고, 17명은 코칭 시간 상한을 넘습니다." style="background: var(--bg2); color: var(--ink); display: grid; grid-template-columns: 1fr 1fr; align-items: start; gap: 100px; padding: 96px var(--pad-x) var(--pad-bottom); box-sizing: border-box; font-family: var(--font-kr);">
     <div style="display: flex; flex-direction: column;">
-      <span style="font-size: var(--type-small); color: var(--blue); font-weight: 600;">추진계획 · 인원</span>
-      <h2 style="margin: 24px 0 0; font-size: var(--type-title); line-height: 1.2; font-weight: 700; letter-spacing: -0.027em;">이탈 20%면 94%, 25%면 85% — 예비 2명으로 보완한다</h2>
+      <span style="font-size: var(--type-small); color: var(--blue); font-weight: 600;">3-1. 추진계획_인원 - 15명 + 예비 2명</span>
+      <h2 style="margin: 24px 0 0; font-size: 58px; line-height: 1.25; font-weight: 700; letter-spacing: -0.027em;"><span style="white-space: nowrap;">이탈 20%면 94%, 25%면 85%</span> <span style="white-space: nowrap;">예비 2명으로 보완한다</span></h2>
       <span style="margin-top: 48px; font-family: var(--font-num); font-size: 160px; line-height: 1; font-weight: 700; letter-spacing: -0.02em;">15<span style="font-size: var(--type-big); font-family: var(--font-kr);">명</span></span>
       <p style="margin: 32px 0 0; font-size: var(--type-sub); line-height: 1.35; font-weight: 600;">결과보고서 10건 확보 확률 94%</p>
       <p style="margin: 20px 0 0; font-size: var(--type-small); line-height: 1.4; color: var(--mute);">이탈률 20% 가정 · 확률 계산(이항분포) · 코칭 12분/인 상한 · 예비 2명</p>
@@ -339,7 +333,7 @@
   </section>
 
   <section data-label="추진계획 2" data-screen-label="14" data-speaker-notes="1인당 최대 200만 원. 현금이 아니라 심사를 통과한 계획서대로 실제 광고비로 집행합니다. 심사는 외부 마케팅 전문가가 하고, 미지원 인원이 발생할 수 있음을 공고에 명시합니다." style="background: var(--bg); color: var(--ink); display: flex; flex-direction: column; justify-content: flex-start; align-items: flex-start; padding: 96px var(--pad-x) var(--pad-bottom); box-sizing: border-box; font-family: var(--font-kr);">
-    <span style="font-size: var(--type-small); color: var(--blue); font-weight: 600;">추진계획 · 단가</span>
+    <span style="font-size: var(--type-small); color: var(--blue); font-weight: 600;">3-2. 추진계획_단가 - 1인당 최대 200만 원</span>
     <h2 style="margin: 24px 0 0; font-size: var(--type-title); line-height: 1.2; font-weight: 700; letter-spacing: -0.027em;">1인당 최대 200만 원, 2채널 비교가 통계적으로 성립하는 최소선</h2>
     <span style="margin-top: 12px; font-size: var(--type-small); color: var(--mute);">채널 단가 × 집행 기간 4개월 · 전환율 3% 가정 표본오차 · 심사 통과 계획대로 실제 광고비 집행, 미지원 인원 발생 가능성 공고 명시</span>
     <div style="display: grid; grid-template-columns: 1.1fr 1fr; gap: 72px; margin-top: 36px; width: 100%; align-items: start;">
@@ -364,7 +358,7 @@
   </section>
 
   <section data-label="추진계획 3" data-screen-label="15" data-speaker-notes="2027년 1분기에 공고·접수·선발, 2분기 교육 12회, 7월 심사, 7월부터 10월까지 집행과 중간 점검, 11월 결과보고. 한 해 안에 사이클을 완결합니다." style="background: var(--bg); color: var(--ink); display: flex; flex-direction: column; justify-content: flex-start; padding: 96px var(--pad-x) var(--pad-bottom); box-sizing: border-box; font-family: var(--font-kr);">
-    <span style="font-size: var(--type-small); color: var(--blue); font-weight: 600;">추진계획 · 일정</span>
+    <span style="font-size: var(--type-small); color: var(--blue); font-weight: 600;">3-3. 추진계획_일정 - 1월 공고, 11월 결과보고</span>
     <h2 style="margin: 24px 0 0; font-size: var(--type-title); line-height: 1.2; font-weight: 700; letter-spacing: -0.027em;">2027년 1월 시작, 11월 결과보고</h2>
     <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 2fr 1fr 2fr 1fr 1.4fr; gap: 12px; margin-top: 96px;">
       <div style="display: flex; flex-direction: column; gap: 24px;"><div style="height: 20px; border-radius: 10px; background: var(--orange);"></div><span style="font-family: var(--font-num); font-size: var(--type-small); color: var(--mute);">1월</span><span style="font-size: var(--type-small); font-weight: 600; line-height: 1.35;">모집 공고</span></div>
@@ -381,7 +375,7 @@
   </section>
 
   <section data-label="기대효과 1" data-screen-label="16" data-speaker-notes="기대 효과입니다. 성과지표는 참여 인원이 아닙니다. 15명 선발, 14명 계획서 제출, 12명 심사 통과, 10건 이상 결과보고서, 그리고 6개월 후 95% 지속." style="background: var(--bg2); color: var(--ink); display: flex; flex-direction: column; justify-content: flex-start; padding: 96px var(--pad-x) var(--pad-bottom); box-sizing: border-box; font-family: var(--font-kr);">
-    <span style="font-size: var(--type-small); color: var(--blue); font-weight: 600;">기대효과 · 과정 KPI</span>
+    <span style="font-size: var(--type-small); color: var(--blue); font-weight: 600;">4-1. 기대효과_과정 KPI - 단계별 인원</span>
     <h2 style="margin: 24px 0 0; font-size: var(--type-title); line-height: 1.2; font-weight: 700; letter-spacing: -0.027em;">15 → 14 → 12 → 10, 그리고 6개월 추적</h2>
     <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 64px;">
       <div style="display: grid; grid-template-columns: 1fr 520px; align-items: center; gap: 40px;"><div style="height: 80px; width: 100%; background: var(--blue); border-radius: 12px; display: flex; align-items: center; justify-content: space-between; padding: 0 36px; box-sizing: border-box;"><span style="font-size: var(--type-body); font-weight: 600;">선발</span><span style="font-family: var(--font-num); font-size: var(--type-sub); font-weight: 700;">15명</span></div><span style="font-size: var(--type-small); color: var(--mute);">100% · 예비 2명</span></div>
@@ -394,7 +388,7 @@
   </section>
 
   <section data-label="기대효과 2" data-screen-label="17" data-speaker-notes="성과 KPI는 시뮬레이션 중앙값입니다. 참여자 1인당 광고 클릭 5,512, 신규 고객 253명, 4개월 증분 매출 906만 원. 하위 25% 값을 최소 목표로 잡아도 사업 전체 증분 매출은 총사업비의 2배 이상입니다." style="background: var(--bg); color: var(--ink); display: flex; flex-direction: column; justify-content: flex-start; padding: 96px var(--pad-x) var(--pad-bottom); box-sizing: border-box; font-family: var(--font-kr);">
-    <span style="font-size: var(--type-small); color: var(--blue); font-weight: 600;">기대효과 · 성과 KPI</span>
+    <span style="font-size: var(--type-small); color: var(--blue); font-weight: 600;">4-2. 기대효과_성과 KPI - 증분 매출 시나리오</span>
     <h2 style="margin: 24px 0 0; font-size: var(--type-title); line-height: 1.2; font-weight: 700; letter-spacing: -0.027em;">가정대로라면 1인당 4개월 증분 매출 약 900만 원</h2>
     <span style="margin-top: 16px; font-size: var(--type-small); color: var(--mute);">가정 기반 시나리오 · 2만 번 모의실험 중간값(P50) · 최소 목표는 하위 25% 값(P25)</span>
     <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 64px; margin-top: 44px;">
@@ -412,7 +406,7 @@
 
   <section data-label="소요예산" data-screen-label="18" data-speaker-notes="소요 예산 3,950만 원. 이 중 3,000만 원이 참여자에게 직접 가는 마케팅비입니다. 강사료, 밋업, 심사비, 사무관리, 홍보·교재가 나머지입니다." style="background: var(--bg2); color: var(--ink); display: grid; grid-template-columns: 1fr 1fr; align-items: start; gap: 100px; padding: 96px var(--pad-x) var(--pad-bottom); box-sizing: border-box; font-family: var(--font-kr);">
     <div style="display: flex; flex-direction: column;">
-      <span style="font-size: var(--type-small); color: var(--blue); font-weight: 600;">소요예산</span>
+      <span style="font-size: var(--type-small); color: var(--blue); font-weight: 600;">5. 소요예산 - 총 39,500천 원</span>
       <h2 style="margin: 24px 0 0; font-size: var(--type-title); line-height: 1.2; font-weight: 700; letter-spacing: -0.027em;">총사업비 39,500천 원, 76%는 참여자 마케팅비</h2>
       <span style="margin-top: 48px; font-family: var(--font-num); font-size: 130px; line-height: 1; font-weight: 700; letter-spacing: -0.02em;">39,500<span style="font-size: var(--type-sub); font-family: var(--font-kr);">천 원</span></span>
       <div style="margin-top: 40px; height: 44px; width: 100%; display: flex; border-radius: 10px; overflow: hidden;"><div style="width: 75.9%; background: var(--blue);"></div><div style="width: 7.6%; background: var(--purple);"></div><div style="width: 4.6%; background: var(--mint);"></div><div style="width: 4.6%; background: var(--orange);"></div><div style="width: 2.5%; background: var(--mute);"></div><div style="width: 4.8%; background: var(--line);"></div></div>
@@ -430,7 +424,7 @@
   </section>
 
   <section data-label="수요조사 검증" data-screen-label="19" data-speaker-notes="수요는 감이 아니라 데이터로 확인했습니다. 공공데이터포털에서 남구 사업체와 연령 현황을, 네이버 데이터랩 API에서 24개월 검색 트렌드를 받아 회귀분석했습니다. 다섯 키워드 모두 전체와 청년층의 추세 방향이 일치했고, 선형 추세는 통계적으로 유의했습니다." style="background: var(--bg); color: var(--ink); display: flex; flex-direction: column; justify-content: flex-start; padding: 96px var(--pad-x) var(--pad-bottom); box-sizing: border-box; font-family: var(--font-kr);">
-    <span style="font-size: var(--type-small); color: var(--blue); font-weight: 600;">참고사항 · 수요조사 검증</span>
+    <span style="font-size: var(--type-small); color: var(--blue); font-weight: 600;">6-1. 참고사항_수요 검증 - 공공데이터와 검색 API</span>
     <h2 style="margin: 24px 0 0; font-size: var(--type-title); line-height: 1.2; font-weight: 700; letter-spacing: -0.027em;">설문 대신 공공데이터와 검색 API로 수요를 추정했다</h2>
     <div style="display: grid; grid-template-columns: 1fr 1.3fr; gap: 100px; margin-top: 56px; align-items: start;">
       <div style="display: flex; flex-direction: column;">
@@ -452,40 +446,10 @@
     <span style="position: absolute; right: var(--pad-x); bottom: 44px; font-size: 24px; line-height: 1.4; color: var(--mute);">근거: 공공데이터포털 · 네이버 데이터랩 검색 API · 자체 회귀분석</span>
   </section>
 
-  <section data-label="PoC 접수 앱" data-screen-label="20" data-speaker-notes="실행 가능성도 미리 확인했습니다. 접수 앱을 PWA로 직접 만들어 사업안내, 자격확인, 신청, 내 접수, 관리까지 동작합니다. 설치 없이 QR로 열리고, 신청 항목이 곧 심사표가 됩니다. 남구 CI 색과 정부 디자인시스템 KRDS 토큰을 썼습니다." style="background: var(--bg2); color: var(--ink); display: grid; grid-template-columns: 1fr 1.15fr; align-items: start; gap: 72px; padding: 96px var(--pad-x) var(--pad-bottom); box-sizing: border-box; font-family: var(--font-kr);">
-    <div style="display: flex; flex-direction: column;">
-      <span style="font-size: var(--type-small); color: var(--blue); font-weight: 600;">참고사항 · PoC</span>
-      <h2 style="margin: 24px 0 0; font-size: var(--type-title); line-height: 1.2; font-weight: 700; letter-spacing: -0.027em;">접수 앱은 PWA로 이미 만들어 두었다</h2>
-      <p style="margin: 20px 0 0; font-size: var(--type-small); line-height: 1.45; color: var(--mute);">사업안내 · 자격확인 · 신청하기 · 내 접수 · 관리까지 동작하는 시제품. 설치 없이 QR로 열립니다.</p>
-      <div style="display: flex; flex-direction: column; margin-top: 24px;">
-        <div style="display: grid; grid-template-columns: 200px 1fr; gap: 24px; padding: 8px 0; border-bottom: 1px solid var(--line); font-size: var(--type-small); line-height: 1.4;"><span style="font-weight: 600;">접수 흐름</span><span style="color: var(--mute);">자격확인 → 신청서 입력 → 접수증 → 내 접수 조회</span></div>
-        <div style="display: grid; grid-template-columns: 200px 1fr; gap: 24px; padding: 8px 0; border-bottom: 1px solid var(--line); font-size: var(--type-small); line-height: 1.4;"><span style="font-weight: 600;">심사 연계</span><span style="color: var(--mute);">신청 항목이 곧 선발·가점 심사표</span></div>
-        <div style="display: grid; grid-template-columns: 200px 1fr; gap: 24px; padding: 8px 0; font-size: var(--type-small); line-height: 1.4;"><span style="font-weight: 600;">주소</span><span style="font-family: var(--font-num); color: var(--blue);">namgu-youth-apply.pages.dev</span></div>
-      </div>
-    </div>
-    <div style="display: flex; justify-content: center; align-items: flex-start; gap: 36px; margin-top: -20px;">
-      <div style="width: 392px; height: 820px; border-radius: 60px; background: #0B0B0C; padding: 14px; box-sizing: border-box; box-shadow: inset 0 0 0 2px rgba(255,255,255,0.12); flex: none;">
-        <div style="width: 100%; height: 100%; border-radius: 48px; overflow: hidden; background: #FFFFFF;"><iframe src="../" title="접수 사이트(휴대폰)" loading="lazy" style="width: 100%; height: 100%; border: 0; background: #FFFFFF;"></iframe></div>
-      </div>
-      <div style="display: flex; flex-direction: column; gap: 14px; flex: 1; min-width: 0;">
-        <div style="border-radius: 18px; background: #0B0B0C; padding: 12px; box-shadow: inset 0 0 0 2px rgba(255,255,255,0.12); display: flex; flex-direction: column; gap: 10px;">
-          <div style="display: flex; align-items: center; gap: 10px;"><span style="width: 12px; height: 12px; border-radius: 50%; background: #FF5F57;"></span><span style="width: 12px; height: 12px; border-radius: 50%; background: #FEBC2E;"></span><span style="width: 12px; height: 12px; border-radius: 50%; background: #28C840;"></span><span style="margin-left: 12px; flex: 1; background: rgba(255,255,255,0.1); border-radius: 8px; padding: 6px 14px; font-family: var(--font-num); font-size: 24px; color: var(--mute); white-space: nowrap; overflow: hidden;">namgu-youth-apply.pages.dev</span></div>
-          <div style="background: #FFFFFF; border-radius: 10px; overflow: hidden; height: 360px;"><iframe src="../" title="접수 사이트(PC)" loading="lazy" style="width: 200%; height: 200%; border: 0; background: #FFFFFF; transform: scale(0.5); transform-origin: 0 0;"></iframe></div>
-        </div>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
-          <div style="background: var(--bg); border-radius: 14px; padding: 16px 20px; display: flex; flex-direction: column; gap: 4px;"><span style="font-size: 24px; font-weight: 700;">웹 · 브라우저</span><span style="font-size: 24px; color: var(--mute); line-height: 1.35;">주소·QR로 바로 열림, 설치 없음</span></div>
-          <div style="background: var(--bg); border-radius: 14px; padding: 16px 20px; display: flex; flex-direction: column; gap: 4px;"><span style="font-size: 24px; font-weight: 700;">앱 · 홈 화면 설치</span><span style="font-size: 24px; color: var(--mute); line-height: 1.35;">같은 주소를 홈에 추가하면 앱처럼 실행</span></div>
-        </div>
-        <span style="font-size: 24px; color: var(--mute); line-height: 1.4;">PWA(Progressive Web App): 하나의 웹 주소가 브라우저에서도, 휴대폰 홈 화면의 앱으로도 동작하는 방식. 앱스토어 등록 없음 · <span style="color: var(--ink); font-weight: 600;">시제품 개발·호스팅 비용 0원</span> · 실제 접수 운영 시 접수 서버·본인 인증·개인정보 보호 조치 필요 · 구청이 채택하면 관내 기존 S/W·앱·누리집에 웹 화면 그대로 또는 소스 통째로 이식 가능</span>
-      </div>
-    </div>
-    <span style="position: absolute; right: var(--pad-x); bottom: 44px; font-size: 24px; line-height: 1.4; color: var(--mute);">근거: 시제품 namgu-youth-apply.pages.dev 실제 화면 캡처</span>
-  </section>
-
-  <section data-label="포스터" data-screen-label="21" data-speaker-notes="모집 포스터 시안입니다. 남구 오륙도 5색을 모티프로 했고, 핵심 숫자 넷과 일정, QR 접수를 한 장에 담았습니다. 관내 대학과 창업 공간에 배포합니다." style="background: var(--bg); color: var(--ink); display: grid; grid-template-columns: 1fr 1fr; align-items: start; gap: 100px; padding: 96px var(--pad-x) var(--pad-bottom); box-sizing: border-box; font-family: var(--font-kr);">
+  <section data-label="포스터" data-screen-label="20" data-speaker-notes="모집 포스터 시안입니다. 남구 오륙도 5색을 모티프로 했고, 핵심 숫자 넷과 일정, QR 접수를 한 장에 담았습니다. QR을 찍으면 다음 쪽의 접수 앱이 바로 열립니다." style="background: var(--bg); color: var(--ink); display: grid; grid-template-columns: 1fr 1fr; align-items: start; gap: 100px; padding: 96px var(--pad-x) var(--pad-bottom); box-sizing: border-box; font-family: var(--font-kr);">
     <div style="display: flex; justify-content: center; order: 2; margin-top: -40px;"><div style="width: 600px; height: 848px; border-radius: 16px; overflow: hidden; background: var(--bg2); position: relative;"><div style="position: absolute; left: 0; top: 0; width: 1200px; height: 1697px; transform: scale(0.5); transform-origin: top left;"><dc-import name="모집 포스터" hint-size="1200px,1697px"></dc-import></div></div></div>
     <div style="display: flex; flex-direction: column;">
-      <span style="font-size: var(--type-small); color: var(--blue); font-weight: 600;">참고사항 · 홍보물</span>
+      <span style="font-size: var(--type-small); color: var(--blue); font-weight: 600;">6-2. 참고사항_홍보물 - 모집 포스터</span>
       <h2 style="margin: 24px 0 0; font-size: var(--type-title); line-height: 1.2; font-weight: 700; letter-spacing: -0.027em;">모집 포스터 시안</h2>
       <div style="display: flex; gap: 12px; margin-top: 40px;">
         <span style="width: 16px; height: 16px; border-radius: 50%; background: #f07a10;"></span>
@@ -499,13 +463,46 @@
         <div style="display: grid; grid-template-columns: 200px 1fr; gap: 24px; padding: 20px 0; border-bottom: 1px solid var(--line); font-size: var(--type-small); line-height: 1.4;"><span style="font-weight: 600;">대상</span><span style="color: var(--mute);">남구 주민등록 만 18~39세 · 사업자등록 보유 생활형 창업자 · 교육 80% 이상 출석</span></div>
         <div style="display: grid; grid-template-columns: 200px 1fr; gap: 24px; padding: 20px 0; border-bottom: 1px solid var(--line); font-size: var(--type-small); line-height: 1.4;"><span style="font-weight: 600;">접수</span><span style="color: var(--mute);">QR → 접수 앱 · 방문 접수 남구 청년창조발전소 고고씽JOB · 2027. 2. 28. 마감</span></div>
         <div style="display: grid; grid-template-columns: 200px 1fr; gap: 24px; padding: 20px 0; font-size: var(--type-small); line-height: 1.4;"><span style="font-weight: 600;">붙임</span><span style="color: var(--mute);">포스터 · 공고문(안) · 신청서(접수 앱)</span></div>
+        <button type="button" data-qr-scan style="align-self: flex-start; margin-top: 28px; display: flex; align-items: center; gap: 14px; border: 0; border-radius: 999px; padding: 18px 32px; background: var(--blue); color: #FFFFFF; font-family: inherit; font-size: var(--type-small); font-weight: 700;"><span style="display: inline-block; width: 30px; height: 30px; border: 4px solid #FFFFFF; border-radius: 8px; box-sizing: border-box;"></span>QR 찍어 보기</button>
+        <span style="margin-top: 12px; font-size: 24px; color: var(--mute);">포스터의 QR을 눌러도 됩니다 · 다음 쪽 접수 앱으로 이동</span>
       </div>
     </div>
     <span style="position: absolute; right: var(--pad-x); bottom: 44px; font-size: 24px; line-height: 1.4; color: var(--mute);">근거: 분과 자체 제작 시안 · 홍보 예산 1,600천 원(기관 게시 A3 40장 포함)</span>
   </section>
 
+  <section data-label="PoC 접수 앱" data-screen-label="21" data-speaker-notes="실행 가능성도 미리 확인했습니다. 접수 앱을 PWA로 직접 만들어 사업안내, 자격확인, 신청, 내 접수, 관리까지 동작합니다. 설치 없이 QR로 열리고, 관리 화면에서는 신청서를 점수화해 선발 후보를 추천합니다. 화면의 지원자는 시연용 가상 데이터이고, 최종 선발은 심사위원이 합니다. 남구 CI 색과 정부 디자인시스템 KRDS 토큰을 썼습니다." style="background: var(--bg2); color: var(--ink); display: grid; grid-template-columns: 1fr 1.15fr; align-items: start; gap: 72px; padding: 96px var(--pad-x) var(--pad-bottom); box-sizing: border-box; font-family: var(--font-kr);">
+    <div style="display: flex; flex-direction: column;">
+      <span style="font-size: var(--type-small); color: var(--blue); font-weight: 600;">6-3. 참고사항_PoC - 접수 앱과 관리 화면</span>
+      <h2 style="margin: 24px 0 0; font-size: 64px; line-height: 1.2; font-weight: 700; letter-spacing: -0.027em;">접수부터 추천까지 시제품으로 만들었다</h2>
+      <p style="margin: 20px 0 0; font-size: var(--type-small); line-height: 1.45; color: var(--mute);">휴대폰은 신청 화면, PC는 관리 화면입니다. 설치 없이 QR로 열립니다.</p>
+      <div style="display: flex; flex-direction: column; margin-top: 24px;">
+        <div style="display: grid; grid-template-columns: 200px 1fr; gap: 24px; padding: 8px 0; border-bottom: 1px solid var(--line); font-size: var(--type-small); line-height: 1.4;"><span style="font-weight: 600;">접수 흐름</span><span style="color: var(--mute);">자격확인 → 신청서 입력 → 접수증 → 내 접수 조회</span></div>
+        <div style="display: grid; grid-template-columns: 200px 1fr; gap: 24px; padding: 8px 0; border-bottom: 1px solid var(--line); font-size: var(--type-small); line-height: 1.4;"><span style="font-weight: 600;">관리 화면</span><span style="color: var(--mute);">접수 현황, 업종·행정동 비교, CSV 내보내기</span></div>
+        <div style="display: grid; grid-template-columns: 200px 1fr; gap: 24px; padding: 8px 0; border-bottom: 1px solid var(--line); font-size: var(--type-small); line-height: 1.4;"><span style="font-weight: 600;">AI 추천</span><span style="color: var(--mute);">신청서 점수화로 15명 + 예비 2명 추천, 최종 선발은 심사위원</span></div>
+        <div style="display: grid; grid-template-columns: 200px 1fr; gap: 24px; padding: 8px 0; font-size: var(--type-small); line-height: 1.4;"><span style="font-weight: 600;">주소</span><span style="font-family: var(--font-num); color: var(--blue);">namgu-youth-apply.pages.dev</span></div>
+      </div>
+    </div>
+    <div style="display: flex; justify-content: center; align-items: flex-start; gap: 36px; margin-top: -20px;">
+      <div style="width: 392px; height: 820px; border-radius: 60px; background: #0B0B0C; padding: 14px; box-sizing: border-box; box-shadow: inset 0 0 0 2px rgba(255,255,255,0.12); flex: none;">
+        <div style="width: 100%; height: 100%; border-radius: 48px; overflow: hidden; background: #FFFFFF;"><iframe src="../" title="접수 사이트(휴대폰)" loading="lazy" style="width: 100%; height: 100%; border: 0; background: #FFFFFF;"></iframe></div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 14px; flex: 1; min-width: 0;">
+        <div style="border-radius: 18px; background: #0B0B0C; padding: 12px; box-shadow: inset 0 0 0 2px rgba(255,255,255,0.12); display: flex; flex-direction: column; gap: 10px;">
+          <div style="display: flex; align-items: center; gap: 10px;"><span style="width: 12px; height: 12px; border-radius: 50%; background: #FF5F57;"></span><span style="width: 12px; height: 12px; border-radius: 50%; background: #FEBC2E;"></span><span style="width: 12px; height: 12px; border-radius: 50%; background: #28C840;"></span><span style="margin-left: 12px; flex: 1; background: rgba(255,255,255,0.1); border-radius: 8px; padding: 6px 14px; font-family: var(--font-num); font-size: 24px; color: var(--mute); white-space: nowrap; overflow: hidden;">namgu-youth-apply.pages.dev/#/admin</span></div>
+          <div style="background: #FFFFFF; border-radius: 10px; overflow: hidden; height: 360px;"><iframe src="../#/admin?demo&focus=ai" title="접수 관리 화면(PC, 시연용 가상 데이터)" loading="lazy" style="width: 200%; height: 200%; border: 0; background: #FFFFFF; transform: scale(0.5); transform-origin: 0 0;"></iframe></div>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+          <div style="background: var(--bg); border-radius: 14px; padding: 16px 20px; display: flex; flex-direction: column; gap: 4px;"><span style="font-size: 24px; font-weight: 700;">웹 · 브라우저</span><span style="font-size: 24px; color: var(--mute); line-height: 1.35;">주소·QR로 바로 열림, 설치 없음</span></div>
+          <div style="background: var(--bg); border-radius: 14px; padding: 16px 20px; display: flex; flex-direction: column; gap: 4px;"><span style="font-size: 24px; font-weight: 700;">앱 · 홈 화면 설치</span><span style="font-size: 24px; color: var(--mute); line-height: 1.35;">같은 주소를 홈에 추가하면 앱처럼 실행</span></div>
+        </div>
+        <span style="font-size: 24px; color: var(--mute); line-height: 1.4;">PWA(Progressive Web App): 하나의 웹 주소가 브라우저에서도, 휴대폰 홈 화면의 앱으로도 동작하는 방식. 앱스토어 등록 없음 · <span style="color: var(--ink); font-weight: 600;">시제품 개발·호스팅 비용 0원</span> · 실제 접수 운영 시 접수 서버·본인 인증·개인정보 보호 조치 필요 · 구청이 채택하면 관내 기존 S/W·앱·누리집에 웹 화면 그대로 또는 소스 통째로 이식 가능</span>
+      </div>
+    </div>
+    <span style="position: absolute; right: var(--pad-x); bottom: 44px; font-size: 24px; line-height: 1.4; color: var(--mute);">근거: 시제품 namgu-youth-apply.pages.dev 실제 화면 · PC 화면의 지원자 24명은 시연용 가상 데이터</span>
+  </section>
+
   <section data-label="홍보 계획 1" data-screen-label="22" data-speaker-notes="홍보 대상은 행인이 아니라 남구 청년 사업주 약 6,000명입니다. 거리 포스터는 쓰지 않습니다. 구청 보유 채널로 직접 알리고, 당근과 인스타그램 타깃 광고로 넓히고, 현수막은 밀집 지점 5곳에만 겁니다. 총 160만 원. 접수 앱은 이미 PWA로 만들어 두어 소프트웨어 구축비와 관리비가 들지 않습니다." style="background: var(--bg); color: var(--ink); display: flex; flex-direction: column; justify-content: flex-start; padding: 96px var(--pad-x) var(--pad-bottom); box-sizing: border-box; font-family: var(--font-kr);">
-    <span style="font-size: var(--type-small); color: var(--blue); font-weight: 600;">홍보 계획 · 채널과 예산</span>
+    <span style="font-size: var(--type-small); color: var(--blue); font-weight: 600;">6-4. 참고사항_홍보 계획 - 채널과 예산</span>
     <h2 style="margin: 24px 0 0; font-size: var(--type-title); line-height: 1.2; font-weight: 700; letter-spacing: -0.027em;">행인이 아니라 남구 청년 사업주 6,000명에게 알린다</h2>
     <span style="margin-top: 12px; font-size: var(--type-small); color: var(--mute);">접수 기간 '27. 2. 1.~2. 28. · 거리 포스터 없음 · 홍보비 1,600천 원(기존 600천 원에서 조정)</span>
     <div style="display: grid; grid-template-columns: 1.4fr 1fr; gap: 64px; margin-top: 20px; align-items: start;">
@@ -528,7 +525,7 @@
   </section>
 
   <section data-label="홍보 계획 2" data-screen-label="23" data-speaker-notes="광고는 행정동 유형별로 나눕니다. 밀집 지역 51%, 중간 34%, 분산 지역은 점포 비중이 9%지만 현수막이 닿지 않아 15%로 높였습니다. 현수막은 상가 좌표로 뽑은 밀집 지점 5곳. 접수 2주 차에 앱 관리 화면을 보고 지원이 적은 지역으로 예산을 옮깁니다. 목표는 접수 45건, 선발 인원의 3배입니다." style="background: var(--bg2); color: var(--ink); display: flex; flex-direction: column; justify-content: flex-start; padding: 96px var(--pad-x) var(--pad-bottom); box-sizing: border-box; font-family: var(--font-kr);">
-    <span style="font-size: var(--type-small); color: var(--blue); font-weight: 600;">홍보 계획 · 지역 배분과 성과 지표</span>
+    <span style="font-size: var(--type-small); color: var(--blue); font-weight: 600;">6-5. 참고사항_홍보 계획 - 지역 배분과 성과 지표</span>
     <h2 style="margin: 24px 0 0; font-size: var(--type-title); line-height: 1.2; font-weight: 700; letter-spacing: -0.027em;">밀집 지역은 현수막, 분산 지역은 광고로 채운다</h2>
     <div style="display: grid; grid-template-columns: 1fr 1.2fr 1fr; gap: 48px; margin-top: 36px; align-items: start;">
       <div style="display: flex; flex-direction: column; gap: 14px;">
@@ -561,176 +558,93 @@
   </section>
 
   <section data-label="참고사항" data-screen-label="24" data-speaker-notes="숫자의 근거와 유의사항입니다. 통계는 중기부 창업기업실태조사와 남구 업소 데이터, 검색 트렌드 2년 분석입니다. 인원과 성과는 이항분포와 몬테카를로 가정값이며, 중간 점검 시 실측치로 재보정합니다." style="background: var(--bg); color: var(--ink); display: flex; flex-direction: column; justify-content: flex-start; padding: 96px var(--pad-x) var(--pad-bottom); box-sizing: border-box; font-family: var(--font-kr);">
-    <span style="font-size: var(--type-small); color: var(--blue); font-weight: 600;">기타 유의사항 · 참고사항</span>
+    <span style="font-size: var(--type-small); color: var(--blue); font-weight: 600;">6-6. 참고사항_유의사항 - 숫자의 근거</span>
     <h2 style="margin: 24px 0 0; font-size: var(--type-title); line-height: 1.2; font-weight: 700; letter-spacing: -0.027em;">숫자의 근거와 유의사항</h2>
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 100px; margin-top: 72px;">
+    <div style="display: grid; grid-template-columns: 1.3fr 1fr; gap: 72px; margin-top: 36px;">
       <div style="display: flex; flex-direction: column;">
         <span style="font-size: var(--type-small); color: var(--mute); font-weight: 600; padding-bottom: 20px; border-bottom: 2px solid var(--line);">통계 · 분석 근거</span>
-        <div style="display: grid; grid-template-columns: 250px 1fr; gap: 20px; padding: 3px 0; border-bottom: 1px solid var(--line); font-size: 24px; line-height: 1.2;"><span style="font-family: var(--font-num); font-weight: 600;">6,024 · 78% · 17.2%</span><span style="color: var(--mute);">국세청 사업자현황 2026. 6. 남구 개인사업자 (nts_age, nts_years)</span></div>
-        <div style="display: grid; grid-template-columns: 250px 1fr; gap: 20px; padding: 3px 0; border-bottom: 1px solid var(--line); font-size: 24px; line-height: 1.2;"><span style="font-family: var(--font-num); font-weight: 600;">9,532 · 32곳 · 7위/16</span><span style="color: var(--mute);">소진공 상가(상권)정보 API 2026. 9. · 남구 9,532 · 부산 159,689개소 (busan_density_by_gu·dong) · 경계 vuski/admdongkor</span></div>
-        <div style="display: grid; grid-template-columns: 250px 1fr; gap: 20px; padding: 3px 0; border-bottom: 1px solid var(--line); font-size: 24px; line-height: 1.2;"><span style="font-family: var(--font-num); font-weight: 600;">67.8% · 65.6% · 63.9%</span><span style="color: var(--mute);">KOSIS 창업기업실태조사 2023년 기준, 표 DT_142017N_420 (창업 7년 이내, 복수응답)</span></div>
-        <div style="display: grid; grid-template-columns: 250px 1fr; gap: 20px; padding: 3px 0; border-bottom: 1px solid var(--line); font-size: 24px; line-height: 1.2;"><span style="font-family: var(--font-num); font-weight: 600;">97.1% · 43.6% · 68.6%</span><span style="color: var(--mute);">KOSIS 소상공인실태조사 2024년 기준, 표 DT_3ME0139 · DT_3ME0140 · DT_3ME0149</span></div>
-        <div style="display: grid; grid-template-columns: 250px 1fr; gap: 20px; padding: 3px 0; border-bottom: 1px solid var(--line); font-size: 24px; line-height: 1.2;"><span style="font-family: var(--font-num); font-weight: 600;">+628% · +14.7/년</span><span style="color: var(--mute);">네이버 데이터랩 검색어 트렌드 2019. 9.~2026. 8. (naver_local_search, naver_trend_long) · 추세·계절 분석(OLS · Kendall τ · STL)</span></div>
-        <div style="display: grid; grid-template-columns: 250px 1fr; gap: 20px; padding: 3px 0; border-bottom: 1px solid var(--line); font-size: 24px; line-height: 1.2;"><span style="font-family: var(--font-num); font-weight: 600;">15명 · 94% · 906만 원</span><span style="color: var(--mute);">확률 계산(이항분포, 이탈 20%) · 2만 번 모의실험(몬테카를로) 하위 25%·중간값·상위 25%, 가정 기반 · 중간 점검 시 재보정</span></div>
-        <div style="display: grid; grid-template-columns: 250px 1fr; gap: 20px; padding: 3px 0; border-bottom: 1px solid var(--line); font-size: 24px; line-height: 1.2;"><span style="font-family: var(--font-num); font-weight: 600;">1.5배 · 12.9배 · +40%</span><span style="color: var(--mute);">네이버 D-플레이스 리포트 2022(네이버 의뢰) · 당근 2026. 7. 기업 발표 · GRI연구논총 26(4) 2024 · 모두 상관관계 · 원자료 data/ 붙임</span></div>
-        <p style="margin: 10px 0 0; font-size: 24px; line-height: 1.35; color: var(--mute); text-wrap: pretty;">용어: p는 우연히 생긴 결과일 가능성(작을수록 믿을 만함) · τ는 한 방향으로 꾸준히 움직인 정도(1에 가까울수록 꾸준함) · 모의실험은 가정값을 바꿔 가며 2만 번 계산한 결과</p>
+        <div style="display: grid; grid-template-columns: 270px 1fr; gap: 20px; padding: 6px 0; align-items: baseline; border-bottom: 1px solid var(--line); font-size: 24px; line-height: 1.25;"><span style="font-family: var(--font-num); font-weight: 600; white-space: nowrap;">6,024 · 78% · 17.2%</span><span style="color: var(--mute);">국세청 사업자현황 2026. 6. 남구 개인사업자</span></div>
+        <div style="display: grid; grid-template-columns: 270px 1fr; gap: 20px; padding: 6px 0; align-items: baseline; border-bottom: 1px solid var(--line); font-size: 24px; line-height: 1.25;"><span style="font-family: var(--font-num); font-weight: 600; white-space: nowrap;">9,532 · 32곳 · 7위/16</span><span style="color: var(--mute);">소진공 상가(상권)정보 API 2026. 9. · 남구 9,532 · 부산 159,689개소 · 경계 vuski/admdongkor</span></div>
+        <div style="display: grid; grid-template-columns: 270px 1fr; gap: 20px; padding: 6px 0; align-items: baseline; border-bottom: 1px solid var(--line); font-size: 24px; line-height: 1.25;"><span style="font-family: var(--font-num); font-weight: 600; white-space: nowrap;">67.8% · 65.6% · 63.9%</span><span style="color: var(--mute);">KOSIS 창업기업실태조사 2023년 기준, 표 DT_142017N_420 (창업 7년 이내, 복수응답)</span></div>
+        <div style="display: grid; grid-template-columns: 270px 1fr; gap: 20px; padding: 6px 0; align-items: baseline; border-bottom: 1px solid var(--line); font-size: 24px; line-height: 1.25;"><span style="font-family: var(--font-num); font-weight: 600; white-space: nowrap;">97.1% · 43.6% · 68.6%</span><span style="color: var(--mute);">KOSIS 소상공인실태조사 2024년 기준, 표 DT_3ME0139 · DT_3ME0140 · DT_3ME0149</span></div>
+        <div style="display: grid; grid-template-columns: 270px 1fr; gap: 20px; padding: 6px 0; align-items: baseline; border-bottom: 1px solid var(--line); font-size: 24px; line-height: 1.25;"><span style="font-family: var(--font-num); font-weight: 600; white-space: nowrap;">+628% · +14.7/년</span><span style="color: var(--mute);">네이버 데이터랩 검색어 트렌드 2019. 9.~2026. 8. · 추세·계절 분석(OLS · Kendall τ · STL)</span></div>
+        <div style="display: grid; grid-template-columns: 270px 1fr; gap: 20px; padding: 6px 0; align-items: baseline; border-bottom: 1px solid var(--line); font-size: 24px; line-height: 1.25;"><span style="font-family: var(--font-num); font-weight: 600; white-space: nowrap;">15명 · 94% · 906만 원</span><span style="color: var(--mute);">확률 계산(이항분포, 이탈 20%) · 2만 번 모의실험(몬테카를로) 하위 25%·중간값·상위 25%, 가정 기반 · 중간 점검 시 재보정</span></div>
+        <div style="display: grid; grid-template-columns: 270px 1fr; gap: 20px; padding: 6px 0; align-items: baseline; border-bottom: 1px solid var(--line); font-size: 24px; line-height: 1.25;"><span style="font-family: var(--font-num); font-weight: 600; white-space: nowrap;">1.5배 · 12.9배 · +40%</span><span style="color: var(--mute);">네이버 D-플레이스 리포트 2022(네이버 의뢰) · 당근 2026. 7. 기업 발표 · GRI연구논총 26(4) 2024 · 모두 상관관계</span></div>
+        <p style="margin: 10px 0 0; font-size: 20px; line-height: 1.4; color: var(--mute); text-wrap: pretty;">용어: p는 우연히 생긴 결과일 가능성(작을수록 믿을 만함) · τ는 한 방향으로 꾸준히 움직인 정도(1에 가까울수록 꾸준함) · 모의실험은 가정값을 바꿔 가며 2만 번 계산한 결과</p>
       </div>
       <div style="display: flex; flex-direction: column;">
         <span style="font-size: var(--type-small); color: var(--mute); font-weight: 600; padding-bottom: 20px; border-bottom: 2px solid var(--line);">유의사항</span>
-        <div style="padding: 22px 0; border-bottom: 1px solid var(--line); font-size: var(--type-small); line-height: 1.45;"><span>성과 KPI는 가정값이며 중간 점검 시 실측치로 재보정</span></div>
-        <div style="padding: 22px 0; border-bottom: 1px solid var(--line); font-size: var(--type-small); line-height: 1.45;"><span>심사 결과에 따른 미지원 인원 발생 가능성을 공고에 명시</span></div>
-        <div style="padding: 22px 0; border-bottom: 1px solid var(--line); font-size: var(--type-small); line-height: 1.45;"><span>선발은 전원 공개모집, 창업 관련 수상경력 가점 기준을 공고에 사전 명시</span></div>
-        <div style="padding: 22px 0; border-bottom: 1px solid var(--line); font-size: var(--type-small); line-height: 1.45;"><span>남구·부산시 기존 창업교육과의 중복 여부 검토 후 보완형으로 설계</span></div>
-        <div style="padding: 22px 0; border-bottom: 1px solid var(--line); font-size: var(--type-small); line-height: 1.45;"><span>조례 조문 번호는 2025. 4. 7. 개정본 기준 제출 전 최종 확인</span></div>
+        <div style="padding: 18px 0; border-bottom: 1px solid var(--line); font-size: var(--type-small); line-height: 1.4;"><span>성과 KPI는 가정값이며 중간 점검 시 실측치로 재보정</span></div>
+        <div style="padding: 18px 0; border-bottom: 1px solid var(--line); font-size: var(--type-small); line-height: 1.4;"><span>심사 결과에 따른 미지원 인원 발생 가능성을 공고에 명시</span></div>
+        <div style="padding: 18px 0; border-bottom: 1px solid var(--line); font-size: var(--type-small); line-height: 1.4;"><span>선발은 전원 공개모집, 창업 관련 수상경력 가점 기준을 공고에 사전 명시</span></div>
+        <div style="padding: 18px 0; border-bottom: 1px solid var(--line); font-size: var(--type-small); line-height: 1.4;"><span>남구·부산시 기존 창업교육과의 중복 여부 검토 후 보완형으로 설계</span></div>
+        <div style="padding: 18px 0; border-bottom: 1px solid var(--line); font-size: var(--type-small); line-height: 1.4;"><span>조례 조문 번호는 2025. 4. 7. 개정본 기준 제출 전 최종 확인</span></div>
       </div>
     </div>
-    <span style="position: absolute; right: var(--pad-x); bottom: 44px; font-size: 24px; line-height: 1.4; color: var(--mute);">근거: 각 항목 좌측 표기 · 정책제안서 V1.3(2026. 9. 27.) 붙임</span>
+    <span style="position: absolute; right: var(--pad-x); bottom: 44px; font-size: 24px; line-height: 1.4; color: var(--mute);">근거: 각 항목 좌측 표기 · 정책제안서 V1.4(2026. 9. 28.) 붙임</span>
   </section>
 
-  <section data-label="회의 아카이브" data-screen-label="25" data-speaker-notes="이 제안이 나오기까지의 과정입니다. 정규 회의 4회, 자문회의 2회. 4차 회의는 Zoom 온라인이었고, 번은 줌으로, 한 번은 직접 만났습니다." style="background: var(--bg); color: var(--ink); display: flex; flex-direction: column; justify-content: flex-start; padding: 96px var(--pad-x) var(--pad-bottom); box-sizing: border-box; font-family: var(--font-kr);">
-    <span style="font-size: var(--type-small); color: var(--blue); font-weight: 600;">회의 아카이브</span>
-    <h2 style="margin: 24px 0 0; font-size: var(--type-title); line-height: 1.2; font-weight: 700; letter-spacing: -0.027em;">정규 회의 4회, 자문회의 2회</h2>
-    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 44px;">
-      <div style="display: flex; flex-direction: column; gap: 18px;"><div style="height: 236px;"><img src="photos/m1.jpg" alt="1차 회의" style="width: 100%; height: 100%; object-fit: cover; border-radius: 20px; display: block;"></div><div style="display: flex; justify-content: space-between; align-items: baseline;"><span style="font-size: var(--type-body); font-weight: 600;">1차 회의</span><span style="font-family: var(--font-num); font-size: var(--type-small); color: var(--mute);">07/17 · 대면</span></div></div>
-      <div style="display: flex; flex-direction: column; gap: 18px;"><div style="height: 236px;"><img src="photos/m2.jpg" alt="2차 회의" style="width: 100%; height: 100%; object-fit: cover; border-radius: 20px; display: block;"></div><div style="display: flex; justify-content: space-between; align-items: baseline;"><span style="font-size: var(--type-body); font-weight: 600;">2차 회의</span><span style="font-family: var(--font-num); font-size: var(--type-small); color: var(--mute);">07/28 · 대면</span></div></div>
-      <div style="display: flex; flex-direction: column; gap: 18px;"><div style="height: 236px;"><img src="photos/m3.jpg" alt="3차 회의" style="width: 100%; height: 100%; object-fit: cover; border-radius: 20px; display: block;"></div><div style="display: flex; justify-content: space-between; align-items: baseline;"><span style="font-size: var(--type-body); font-weight: 600;">3차 회의</span><span style="font-family: var(--font-num); font-size: var(--type-small); color: var(--mute);">09/09 · 대면</span></div></div>
-      <div style="display: flex; flex-direction: column; gap: 18px;"><div style="height: 236px;"><img src="photos/m4.jpg" alt="4차 회의 Zoom 화면" style="width: 100%; height: 100%; object-fit: cover; border-radius: 20px; display: block;"></div><div style="display: flex; justify-content: space-between; align-items: baseline;"><span style="font-size: var(--type-body); font-weight: 600;">4차 회의</span><span style="font-family: var(--font-num); font-size: var(--type-small); color: var(--mute);">09/21 · Zoom</span></div></div>
-      <div style="display: flex; flex-direction: column; gap: 18px;"><div style="height: 236px;"><img src="photos/m5.jpg" alt="추가 회의 Zoom 화면" style="width: 100%; height: 100%; object-fit: cover; border-radius: 20px; display: block;"></div><div style="display: flex; justify-content: space-between; align-items: baseline;"><span style="font-size: var(--type-body); font-weight: 600;">추가 회의</span><span style="font-family: var(--font-num); font-size: var(--type-small); color: var(--mute);">Zoom · 3D 지도 검토</span></div></div>
-      <div style="display: flex; flex-direction: column; gap: 18px;"><div style="height: 236px;"><div style="height: 100%; box-sizing: border-box; border-radius: 20px; background: var(--bg2); padding: 28px 32px; display: flex; flex-direction: column; justify-content: center; gap: 10px;"><span style="font-size: var(--type-small); font-weight: 600;">1차 08/04 · 2차 09/10</span><span style="font-size: 24px; line-height: 1.4; color: var(--mute);">사진 기록 없음 · 회의록으로 기록, 반영 내용은 27~29쪽</span></div></div><div style="display: flex; justify-content: space-between; align-items: baseline;"><span style="font-size: var(--type-body); font-weight: 600;">자문회의 2회</span><span style="font-family: var(--font-num); font-size: var(--type-small); color: var(--mute);">대면</span></div></div>
+  <section data-label="회의 아카이브 1" data-screen-label="25" data-speaker-notes="이 제안이 나오기까지의 과정입니다. 7월 1차 회의에서 위원 네 명이 아이디어를 냈고, 2차 회의에서 창업과 일자리 제안서 초안 두 건을 썼습니다. 8월 1차 자문회의에서 한 분야로 집중하라는 권고를 받아, 9월 3차 회의에서 창업 분야 한 건으로 정했습니다. 자문회의는 사진이 없어 예시 그림으로 대신했습니다." style="background: var(--bg); color: var(--ink); display: flex; flex-direction: column; justify-content: flex-start; padding: 96px var(--pad-x) var(--pad-bottom); box-sizing: border-box; font-family: var(--font-kr);">
+    <span style="font-size: var(--type-small); color: var(--blue); font-weight: 600;">7-1. 회의 아카이브_7~9월 초 - 발굴에서 집중까지</span>
+    <h2 style="margin: 20px 0 0; font-size: 64px; line-height: 1.2; font-weight: 700; letter-spacing: -0.027em;">위원 4명의 아이디어에서 창업 제안 1건으로</h2>
+    <div style="display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 28px 56px; margin-top: 32px;">
+      <div style="display: grid; grid-template-columns: 280px minmax(0, 1fr); gap: 28px; height: 330px; border-top: 3px solid var(--blue); padding-top: 18px; box-sizing: border-box;"><div style="height: 100%; min-height: 0;"><img src="photos/m1.jpg" alt="1차 회의" style="width: 100%; height: 100%; object-fit: cover; border-radius: 20px; display: block;"></div><div style="display: flex; flex-direction: column; gap: 6px; min-width: 0;"><div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px;"><span style="font-size: var(--type-body); font-weight: 700; white-space: nowrap;">1차 회의</span><span style="font-family: var(--font-num); font-size: 24px; color: var(--mute); white-space: nowrap;">07/17 · 대면</span></div><span style="font-size: 26px; font-weight: 600; line-height: 1.3;">일자리·창업 정책 제안 발굴</span><span style="font-size: 20px; color: var(--mute); line-height: 1.35;">김우철·박상민·유정호·김영훈 위원</span><ul data-wrap="pretty" style="list-style: none; margin: 6px 0 0; padding: 0; display: flex; flex-direction: column; gap: 4px; font-size: 24px; line-height: 1.35;"><li style="display: grid; grid-template-columns: 18px 1fr; gap: 8px;"><span style="color: var(--blue);">·</span><span>위원 4명이 일자리·창업 아이디어 발표</span></li><li style="display: grid; grid-template-columns: 18px 1fr; gap: 8px;"><span style="color: var(--blue);">·</span><span>합의: 금융권 일자리 지원, 리빙랩 연계 마케팅 교육</span></li><li style="display: grid; grid-template-columns: 18px 1fr; gap: 8px;"><span style="color: var(--blue);">·</span><span>과제: 두 제안의 사례 조사</span></li></ul></div></div>
+      <div style="display: grid; grid-template-columns: 280px minmax(0, 1fr); gap: 28px; height: 330px; border-top: 3px solid var(--blue); padding-top: 18px; box-sizing: border-box;"><div style="height: 100%; min-height: 0;"><img src="photos/m2.jpg" alt="2차 회의" style="width: 100%; height: 100%; object-fit: cover; border-radius: 20px; display: block;"></div><div style="display: flex; flex-direction: column; gap: 6px; min-width: 0;"><div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px;"><span style="font-size: var(--type-body); font-weight: 700; white-space: nowrap;">2차 회의</span><span style="font-family: var(--font-num); font-size: 24px; color: var(--mute); white-space: nowrap;">07/28 · 대면</span></div><span style="font-size: 26px; font-weight: 600; line-height: 1.3;">정책제안서 초안 2건 작성</span><span style="font-size: 20px; color: var(--mute); line-height: 1.35;">김우철·박상민·유정호·김영훈 위원</span><ul data-wrap="pretty" style="list-style: none; margin: 6px 0 0; padding: 0; display: flex; flex-direction: column; gap: 4px; font-size: 24px; line-height: 1.35;"><li style="display: grid; grid-template-columns: 18px 1fr; gap: 8px;"><span style="color: var(--blue);">·</span><span>창업: 교육–계획–심사–집행–성과검증 구조</span></li><li style="display: grid; grid-template-columns: 18px 1fr; gap: 8px;"><span style="color: var(--blue);">·</span><span>일자리: BIFC 금융권 일자리 박람회</span></li><li style="display: grid; grid-template-columns: 18px 1fr; gap: 8px;"><span style="color: var(--blue);">·</span><span>조례 근거 조문 정리</span></li></ul></div></div>
+      <div style="display: grid; grid-template-columns: 280px minmax(0, 1fr); gap: 28px; height: 330px; border-top: 3px solid var(--orange); padding-top: 18px; box-sizing: border-box;"><div style="height: 100%; min-height: 0;"><div style="position: relative; width: 100%; height: 100%;"><svg viewBox="0 0 280 330" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="자문회의 예시 그림" style="width: 100%; height: 100%; display: block; border-radius: 20px;">
+<rect width="280" height="330" fill="#3A2E1F"/>
+<rect x="28" y="30" width="224" height="120" rx="12" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.22)" stroke-width="2"/>
+<rect x="50" y="104" width="22" height="30" rx="4" fill="#FFB55B"/><rect x="84" y="86" width="22" height="48" rx="4" fill="#FFB55B"/><rect x="118" y="66" width="22" height="68" rx="4" fill="#FFD9A8"/>
+<path d="M160 60h70M160 80h70M160 100h48" stroke="rgba(255,255,255,0.45)" stroke-width="6" stroke-linecap="round"/>
+<circle cx="78" cy="196" r="24" fill="#FFD9A8"/><path d="M38 300c0-36 18-58 40-58s40 22 40 58z" fill="#FFD9A8"/>
+<circle cx="202" cy="196" r="24" fill="#FFB55B"/><path d="M162 300c0-36 18-58 40-58s40 22 40 58z" fill="#FFB55B"/>
+<rect x="20" y="282" width="240" height="14" rx="7" fill="rgba(255,255,255,0.85)"/>
+<rect x="112" y="258" width="56" height="26" rx="4" fill="#FFFFFF"/><path d="M122 268h36M122 276h24" stroke="#3A2E1F" stroke-width="3" stroke-linecap="round"/>
+<path d="M112 184h34a8 8 0 0 1 8 8v14a8 8 0 0 1-8 8h-16l-10 10v-10h-8a8 8 0 0 1-8-8v-14a8 8 0 0 1 8-8z" fill="rgba(255,255,255,0.92)" transform="translate(12 -22)"/>
+<path d="M126 176h22M126 186h14" stroke="#3A2E1F" stroke-width="3" stroke-linecap="round"/>
+</svg><span style="position: absolute; left: 12px; bottom: 12px; background: rgba(0,0,0,0.55); color: #FFFFFF; border-radius: 999px; padding: 4px 14px; font-size: 18px;">사진 없음 · 예시 그림</span></div></div><div style="display: flex; flex-direction: column; gap: 6px; min-width: 0;"><div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px;"><span style="font-size: var(--type-body); font-weight: 700; white-space: nowrap;">1차 자문회의</span><span style="font-family: var(--font-num); font-size: 24px; color: var(--mute); white-space: nowrap;">08/04 · 대면</span></div><span style="font-size: 26px; font-weight: 600; line-height: 1.3;">정책제안서 초안 자문</span><span style="font-size: 20px; color: var(--mute); line-height: 1.35;">김우철·김영훈 위원, 청년 자문위원 3명</span><ul data-wrap="pretty" style="list-style: none; margin: 6px 0 0; padding: 0; display: flex; flex-direction: column; gap: 4px; font-size: 24px; line-height: 1.35;"><li style="display: grid; grid-template-columns: 18px 1fr; gap: 8px;"><span style="color: var(--orange);">·</span><span>창업·일자리 중 한 분야로 집중 권고</span></li><li style="display: grid; grid-template-columns: 18px 1fr; gap: 8px;"><span style="color: var(--orange);">·</span><span>기존·유사 사업과 중복 여부 확인 권고</span></li></ul></div></div>
+      <div style="display: grid; grid-template-columns: 280px minmax(0, 1fr); gap: 28px; height: 330px; border-top: 3px solid var(--blue); padding-top: 18px; box-sizing: border-box;"><div style="height: 100%; min-height: 0;"><img src="photos/m3.jpg" alt="3차 회의" style="width: 100%; height: 100%; object-fit: cover; border-radius: 20px; display: block;"></div><div style="display: flex; flex-direction: column; gap: 6px; min-width: 0;"><div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px;"><span style="font-size: var(--type-body); font-weight: 700; white-space: nowrap;">3차 회의</span><span style="font-family: var(--font-num); font-size: 24px; color: var(--mute); white-space: nowrap;">09/09 · 대면</span></div><span style="font-size: 26px; font-weight: 600; line-height: 1.3;">제안서 V1.0 검토</span><span style="font-size: 20px; color: var(--mute); line-height: 1.35;">김우철·유정호 위원</span><ul data-wrap="pretty" style="list-style: none; margin: 6px 0 0; padding: 0; display: flex; flex-direction: column; gap: 4px; font-size: 24px; line-height: 1.35;"><li style="display: grid; grid-template-columns: 18px 1fr; gap: 8px;"><span style="color: var(--blue);">·</span><span>창업 분야 1건으로 집중, 일자리는 보류</span></li><li style="display: grid; grid-template-columns: 18px 1fr; gap: 8px;"><span style="color: var(--blue);">·</span><span>규모 조정: 약 8천만 → 5천만 원, 15명 → 10명</span></li><li style="display: grid; grid-template-columns: 18px 1fr; gap: 8px;"><span style="color: var(--blue);">·</span><span>교육이 실행으로 이어지는 구조 유지</span></li></ul></div></div>
     </div>
-    <span style="position: absolute; right: var(--pad-x); bottom: 44px; font-size: 24px; line-height: 1.4; color: var(--mute);">근거: 일자리/창업 분과 회의록 · 참석자 서명부</span>
+    <span style="position: absolute; right: var(--pad-x); bottom: 44px; font-size: 24px; line-height: 1.4; color: var(--mute);">근거: 일자리/창업 분과 회의록 · 참석자 서명부 · 파란 선 정규 회의, 주황 선 자문회의</span>
   </section>
 
-  <section data-label="회의록 1·2차" data-screen-label="26" data-speaker-notes="1차 회의에서 네 위원이 아홉 개 아이디어를 냈고 금융권 타겟팅 지원과 리빙랩 연계 마케팅 교육 두 가지로 모았습니다. 2차 회의에서 두 제안을 정책제안서 초안으로 썼습니다." style="background: var(--bg2); color: var(--ink); display: flex; flex-direction: column; justify-content: flex-start; padding: 96px var(--pad-x) var(--pad-bottom); box-sizing: border-box; font-family: var(--font-kr);">
-    <span style="font-size: var(--type-small); color: var(--blue); font-weight: 600;">회의 아카이브 · 1차 회의 · 2차 회의</span>
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 56px; margin-top: 28px;">
-      <div style="display: flex; flex-direction: column; gap: 14px; border-top: 3px solid var(--blue); padding-top: 24px;">
-        <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 16px;"><span style="font-size: var(--type-sub); font-weight: 700; letter-spacing: -0.02em;">1차 회의</span><span style="font-family: var(--font-num); font-size: 24px; color: var(--mute); white-space: nowrap;">07/17 · 파스쿠찌 부산경성대점</span></div>
-        <span style="font-size: var(--type-small); font-weight: 600;">청년 일자리·창업 정책 제안 발굴</span>
-        <span style="font-size: 24px; color: var(--mute);">참석: 김우철·박상민·유정호·김영훈 위원</span>
-        <span style="margin-top: 8px; font-size: 24px; color: var(--mute); font-weight: 600;">위원별 제안</span>
-        <div style="display: flex; flex-direction: column; gap: 6px; font-size: 24px; line-height: 1.35;">
-          <span><span style="font-weight: 600;">김우철</span> 금융권 일자리 박람회·설명회 지원 · '남구의 성수동화' 임대료 지원</span>
-          <span><span style="font-weight: 600;">박상민</span> 해양·해양금융 자격증 지원 특화 · 리빙랩 고도화 · 광고비 충전형 마케팅 지원</span>
-          <span><span style="font-weight: 600;">유정호</span> 바이럴 마케팅 실질 교육 지원 · 지원 대상 선별 지표 도입</span>
-          <span><span style="font-weight: 600;">김영훈</span> 자격증 취득 후속 연계 프로그램</span>
-        </div>
-        <span style="margin-top: 8px; font-size: 24px; color: var(--mute); font-weight: 600;">최종 합의</span>
-        <div style="display: flex; flex-direction: column; gap: 6px; font-size: 24px; line-height: 1.35;">
-          <span><span style="color: var(--blue); font-weight: 600;">일자리</span> 금융권 타겟팅 지원 — 박람회·교육·컨설팅을 포괄하는 종합 지원책</span>
-          <span><span style="color: var(--blue); font-weight: 600;">창업</span> 리빙랩 우수 참가자 대상 마케팅 교육 연계 지원</span>
-        </div>
-      </div>
-      <div style="display: flex; flex-direction: column; gap: 14px; border-top: 3px solid var(--blue); padding-top: 24px;">
-        <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 16px;"><span style="font-size: var(--type-sub); font-weight: 700; letter-spacing: -0.02em;">2차 회의</span><span style="font-family: var(--font-num); font-size: 24px; color: var(--mute); white-space: nowrap;">07/28 · 파스쿠찌 부산경성대점</span></div>
-        <span style="font-size: var(--type-small); font-weight: 600;">정책제안서 초안 2건 작성</span>
-        <span style="font-size: 24px; color: var(--mute);">참석: 김우철·박상민·유정호·김영훈 위원</span>
-        <span style="margin-top: 8px; font-size: 24px; color: var(--mute); font-weight: 600;">주요 논의</span>
-        <div style="display: flex; flex-direction: column; gap: 6px; font-size: 24px; line-height: 1.35;">
-          <span><span style="font-weight: 600;">창업</span> '교육–계획–심사–집행–성과검증' 완결형 구조 · 예비창업가·창업가 15인씩 분리 선발, 3개월 12회 교육 · 마케팅비 150·300만 원 차등 지원 · 수치 성과 중심 KPI</span>
-          <span><span style="font-weight: 600;">일자리</span> BIFC 입지 자산 활용 · 채용상담 부스 25개사 내외 + AI 취업 컨설팅·패널 토크 · 부경대·경성대·동명대 공동 운영 · 채용 연계 중심 KPI</span>
-          <span><span style="font-weight: 600;">조례</span> 「남구 청년 기본 조례」 제15·16·22·6조 근거 정리, 최신 개정본 조문 번호 확인</span>
-        </div>
-        <span style="margin-top: 8px; font-size: 24px; color: var(--mute); font-weight: 600;">결정 사항</span>
-        <div style="display: flex; flex-direction: column; gap: 6px; font-size: 24px; line-height: 1.35;">
-          <span><span style="color: var(--blue); font-weight: 600;">초안 2건</span> 청년 창업가 마케팅 심화교육 및 마케팅비 지원 사업 · 남구 청년 금융권 일자리 박람회 개최 사업 — 분과원 검토 후 네트워크 제출</span>
-        </div>
-      </div>
+  <section data-label="회의 아카이브 2" data-screen-label="26" data-speaker-notes="9월 2차 자문회의에서는 제안배경의 논리 흐름, 외부 전문가 심사, 예산 단가를 짚어 주셨습니다. 4차 회의에서 설문조사 항목을 빼고 역할을 나눴고, 5차 회의에서 3D 지도와 발표 자료의 근거 논리를 함께 검토했습니다. 4차와 5차는 Zoom으로 진행했습니다." style="background: var(--bg2); color: var(--ink); display: flex; flex-direction: column; justify-content: flex-start; padding: 96px var(--pad-x) var(--pad-bottom); box-sizing: border-box; font-family: var(--font-kr);">
+    <span style="font-size: var(--type-small); color: var(--blue); font-weight: 600;">7-2. 회의 아카이브_9월 - 자문 반영과 마무리</span>
+    <h2 style="margin: 20px 0 0; font-size: 64px; line-height: 1.2; font-weight: 700; letter-spacing: -0.027em;">자문을 반영하고, 데이터로 다시 썼다</h2>
+    <div style="display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 28px 56px; margin-top: 32px;">
+      <div style="display: grid; grid-template-columns: 280px minmax(0, 1fr); gap: 28px; height: 330px; border-top: 3px solid var(--orange); padding-top: 18px; box-sizing: border-box;"><div style="height: 100%; min-height: 0;"><div style="position: relative; width: 100%; height: 100%;"><svg viewBox="0 0 280 330" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="자문회의 예시 그림" style="width: 100%; height: 100%; display: block; border-radius: 20px;">
+<rect width="280" height="330" fill="#1F2E3A"/>
+<rect x="28" y="30" width="224" height="120" rx="12" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.22)" stroke-width="2"/>
+<rect x="50" y="104" width="22" height="30" rx="4" fill="#7FB8FF"/><rect x="84" y="86" width="22" height="48" rx="4" fill="#7FB8FF"/><rect x="118" y="66" width="22" height="68" rx="4" fill="#C6DDFF"/>
+<path d="M160 60h70M160 80h70M160 100h48" stroke="rgba(255,255,255,0.45)" stroke-width="6" stroke-linecap="round"/>
+<circle cx="78" cy="196" r="24" fill="#C6DDFF"/><path d="M38 300c0-36 18-58 40-58s40 22 40 58z" fill="#C6DDFF"/>
+<circle cx="202" cy="196" r="24" fill="#7FB8FF"/><path d="M162 300c0-36 18-58 40-58s40 22 40 58z" fill="#7FB8FF"/>
+<rect x="20" y="282" width="240" height="14" rx="7" fill="rgba(255,255,255,0.85)"/>
+<rect x="112" y="258" width="56" height="26" rx="4" fill="#FFFFFF"/><path d="M122 268h36M122 276h24" stroke="#1F2E3A" stroke-width="3" stroke-linecap="round"/>
+<path d="M112 184h34a8 8 0 0 1 8 8v14a8 8 0 0 1-8 8h-16l-10 10v-10h-8a8 8 0 0 1-8-8v-14a8 8 0 0 1 8-8z" fill="rgba(255,255,255,0.92)" transform="translate(12 -22)"/>
+<path d="M126 176h22M126 186h14" stroke="#1F2E3A" stroke-width="3" stroke-linecap="round"/>
+</svg><span style="position: absolute; left: 12px; bottom: 12px; background: rgba(0,0,0,0.55); color: #FFFFFF; border-radius: 999px; padding: 4px 14px; font-size: 18px;">사진 없음 · 예시 그림</span></div></div><div style="display: flex; flex-direction: column; gap: 6px; min-width: 0;"><div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px;"><span style="font-size: var(--type-body); font-weight: 700; white-space: nowrap;">2차 자문회의</span><span style="font-family: var(--font-num); font-size: 24px; color: var(--mute); white-space: nowrap;">09/10 · 대면</span></div><span style="font-size: 26px; font-weight: 600; line-height: 1.3;">창업 제안서 V1.0 자문</span><span style="font-size: 20px; color: var(--mute); line-height: 1.35;">김우철·박상민·김영훈 위원, 청년 자문위원</span><ul data-wrap="pretty" style="list-style: none; margin: 6px 0 0; padding: 0; display: flex; flex-direction: column; gap: 4px; font-size: 24px; line-height: 1.35;"><li style="display: grid; grid-template-columns: 18px 1fr; gap: 8px;"><span style="color: var(--orange);">·</span><span>제안배경을 실태 → 남구 한계 → 남구 역할 순으로</span></li><li style="display: grid; grid-template-columns: 18px 1fr; gap: 8px;"><span style="color: var(--orange);">·</span><span>외부 전문가 심사와 5단계 운영 절차 명시</span></li><li style="display: grid; grid-template-columns: 18px 1fr; gap: 8px;"><span style="color: var(--orange);">·</span><span>수요조사는 별도 사업 성격, 분리 검토</span></li></ul></div></div>
+      <div style="display: grid; grid-template-columns: 280px minmax(0, 1fr); gap: 28px; height: 330px; border-top: 3px solid var(--blue); padding-top: 18px; box-sizing: border-box;"><div style="height: 100%; min-height: 0;"><img src="photos/m4.jpg" alt="4차 회의 Zoom 화면" style="width: 100%; height: 100%; object-fit: cover; border-radius: 20px; display: block;"></div><div style="display: flex; flex-direction: column; gap: 6px; min-width: 0;"><div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px;"><span style="font-size: var(--type-body); font-weight: 700; white-space: nowrap;">4차 회의</span><span style="font-family: var(--font-num); font-size: 24px; color: var(--mute); white-space: nowrap;">09/21 · Zoom</span></div><span style="font-size: 26px; font-weight: 600; line-height: 1.3;">제안서 보완 방향 점검</span><span style="font-size: 20px; color: var(--mute); line-height: 1.35;">김우철·박상민 위원</span><ul data-wrap="pretty" style="list-style: none; margin: 6px 0 0; padding: 0; display: flex; flex-direction: column; gap: 4px; font-size: 24px; line-height: 1.35;"><li style="display: grid; grid-template-columns: 18px 1fr; gap: 8px;"><span style="color: var(--blue);">·</span><span>설문조사 항목 삭제</span></li><li style="display: grid; grid-template-columns: 18px 1fr; gap: 8px;"><span style="color: var(--blue);">·</span><span>지원 비용·인원 적정성 검토</span></li><li style="display: grid; grid-template-columns: 18px 1fr; gap: 8px;"><span style="color: var(--blue);">·</span><span>역할: 발표 자료(김우철), 제안서 보완(박상민)</span></li></ul></div></div>
+      <div style="display: grid; grid-template-columns: 280px minmax(0, 1fr); gap: 28px; height: 330px; border-top: 3px solid var(--blue); padding-top: 18px; box-sizing: border-box;"><div style="height: 100%; min-height: 0;"><img src="photos/m5.jpg" alt="5차 회의 Zoom 화면" style="width: 100%; height: 100%; object-fit: cover; border-radius: 20px; display: block;"></div><div style="display: flex; flex-direction: column; gap: 6px; min-width: 0;"><div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px;"><span style="font-size: var(--type-body); font-weight: 700; white-space: nowrap;">5차 회의</span><span style="font-family: var(--font-num); font-size: 24px; color: var(--mute); white-space: nowrap;">09/27 · Zoom</span></div><span style="font-size: 26px; font-weight: 600; line-height: 1.3;">3D 지도와 발표 자료 검토</span><span style="font-size: 20px; color: var(--mute); line-height: 1.35;">김우철·유정호·김영훈 위원</span><ul data-wrap="pretty" style="list-style: none; margin: 6px 0 0; padding: 0; display: flex; flex-direction: column; gap: 4px; font-size: 24px; line-height: 1.35;"><li style="display: grid; grid-template-columns: 18px 1fr; gap: 8px;"><span style="color: var(--blue);">·</span><span>행정동별 업종·업소 3D 지도 검토</span></li><li style="display: grid; grid-template-columns: 18px 1fr; gap: 8px;"><span style="color: var(--blue);">·</span><span>발표 자료의 근거 논리 6단계 점검</span></li></ul></div></div>
+      <div style="display: flex; flex-direction: column; height: 330px; border-top: 3px solid var(--mint); padding-top: 18px; box-sizing: border-box;"><span style="font-size: var(--type-body); font-weight: 700;">회의를 거치며 바뀐 규모</span><div style="display: grid; grid-template-columns: 190px 1fr; gap: 16px; padding: 10px 0; margin-top: 10px; border-bottom: 1px solid var(--line); font-size: 24px; line-height: 1.35;"><span style="color: var(--mute);">2차 07/28</span><span style="font-family: var(--font-num);">30명(15 + 15) · 150·300만 원</span></div><div style="display: grid; grid-template-columns: 190px 1fr; gap: 16px; padding: 10px 0; border-bottom: 1px solid var(--line); font-size: 24px; line-height: 1.35;"><span style="color: var(--mute);">3차 09/09</span><span style="font-family: var(--font-num);">10명 · 300만 원 · 약 5천만 원</span></div><div style="display: grid; grid-template-columns: 190px 1fr; gap: 16px; padding: 10px 0; border-bottom: 1px solid var(--line); font-size: 24px; line-height: 1.35; font-weight: 700; color: var(--mint);"><span>최종 V1.4</span><span style="font-family: var(--font-num);">15명 + 예비 2 · 200만 원 · 39,500천 원</span></div><span data-wrap="pretty" style="margin-top: 12px; font-size: 24px; line-height: 1.4; color: var(--mute);">인원과 단가는 이탈률·표본 크기 분석으로 다시 정했다(13~14쪽).</span></div>
     </div>
-    <span style="position: absolute; right: var(--pad-x); bottom: 44px; font-size: 24px; line-height: 1.4; color: var(--mute);">근거: 분과 회의록 · 회의 아카이브(meetings.js)</span>
+    <span style="position: absolute; right: var(--pad-x); bottom: 44px; font-size: 24px; line-height: 1.4; color: var(--mute);">근거: 분과 회의록 · 4·5차는 Zoom 화면 기록 · 정책제안서 V1.4(2026. 9. 28.)</span>
   </section>
 
-  <section data-label="회의록 자문1·3차" data-screen-label="27" data-speaker-notes="1차 자문회의의 결론은 한 분야에 집중하라, 기존 사업과 겹치는지 보라, 두 가지였습니다. 3차 회의에서 창업 분야 1건으로 확정하고 남구 규모에 맞춰 예산과 인원을 줄였습니다." style="background: var(--bg); color: var(--ink); display: flex; flex-direction: column; justify-content: flex-start; padding: 96px var(--pad-x) var(--pad-bottom); box-sizing: border-box; font-family: var(--font-kr);">
-    <span style="font-size: var(--type-small); color: var(--blue); font-weight: 600;">회의 아카이브 · 1차 자문회의 · 3차 회의</span>
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 56px; margin-top: 28px;">
-      <div style="display: flex; flex-direction: column; gap: 14px; border-top: 3px solid var(--orange); padding-top: 24px;">
-        <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 16px;"><span style="font-size: var(--type-sub); font-weight: 700; letter-spacing: -0.02em;">1차 자문회의</span><span style="font-family: var(--font-num); font-size: 24px; color: var(--mute); white-space: nowrap;">08/04</span></div>
-        <span style="font-size: var(--type-small); font-weight: 600;">정책제안서 초안 자문</span>
-        <span style="font-size: 24px; color: var(--mute);">참석: 김우철·김영훈 위원, 청년 자문위원 3명</span>
-        <span style="margin-top: 8px; font-size: 24px; color: var(--mute); font-weight: 600;">주요 자문 의견</span>
-        <div style="display: flex; flex-direction: column; gap: 6px; font-size: 24px; line-height: 1.35;">
-          <span><span style="color: var(--orange); font-weight: 600;">방향성</span> 창업·일자리 중 한 분야로 포커싱 — 제안서 2건 병행보다 한 분야 집중이 완성도와 채택 가능성 측면에서 유리</span>
-          <span><span style="color: var(--orange); font-weight: 600;">사전 검토</span> 기존 사업과의 중복 여부 검토 — 남구·부산시 등에서 시행된 동일·유사 사업 확인 후 보완</span>
-        </div>
-        <span style="margin-top: 8px; font-size: 24px; color: var(--mute); font-weight: 600;">향후 계획</span>
-        <div style="display: flex; flex-direction: column; gap: 6px; font-size: 24px; line-height: 1.35;">
-          <span>창업·일자리 두 분야 중 집중할 분야 결정 · 기존·유사 사업 중복 여부 조사</span>
-        </div>
-      </div>
-      <div style="display: flex; flex-direction: column; gap: 14px; border-top: 3px solid var(--blue); padding-top: 24px;">
-        <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 16px;"><span style="font-size: var(--type-sub); font-weight: 700; letter-spacing: -0.02em;">3차 회의</span><span style="font-family: var(--font-num); font-size: 24px; color: var(--mute); white-space: nowrap;">09/09 · 파스쿠찌 부산경성대점</span></div>
-        <span style="font-size: var(--type-small); font-weight: 600;">창업 분야 제안서 피드백 반영본(V1.0) 검토</span>
-        <span style="font-size: 24px; color: var(--mute);">참석: 김우철·유정호 위원</span>
-        <span style="margin-top: 8px; font-size: 24px; color: var(--mute); font-weight: 600;">주요 논의</span>
-        <div style="display: flex; flex-direction: column; gap: 6px; font-size: 24px; line-height: 1.35;">
-          <span><span style="font-weight: 600;">김우철</span> 1차 자문에 따라 창업 분야 1건으로 집중 · 피드백 반영본 V1.0(2026. 9. 7.) 기준 사업 구조·규모·예산 항목별 검토</span>
-          <span><span style="font-weight: 600;">유정호</span> 창업자에게 가장 필요한 지원은 바이럴 마케팅 역량과 실행 자금 · 남구 규모에 맞춘 지원 축소에 동의, 소규모라도 성과검증까지 완결</span>
-        </div>
-        <span style="margin-top: 8px; font-size: 24px; color: var(--mute); font-weight: 600;">결정 사항</span>
-        <div style="display: flex; flex-direction: column; gap: 6px; font-size: 24px; line-height: 1.35;">
-          <span><span style="color: var(--blue); font-weight: 600;">창업</span> 일자리 분야 제안 보류, '청년 창업가 마케팅 심화교육 및 마케팅비 지원 사업'을 분과 대표 제안으로 확정</span>
-          <span><span style="color: var(--blue); font-weight: 600;">규모</span> 예산 약 8천만 원 → 약 5천만 원, 대상 인원 15명 → 10명으로 축소 반영 · V1.0 2차 자문회의 상정</span>
-        </div>
-      </div>
-    </div>
-    <span style="position: absolute; right: var(--pad-x); bottom: 44px; font-size: 24px; line-height: 1.4; color: var(--mute);">근거: 분과 회의록 · 회의 아카이브(meetings.js)</span>
-  </section>
-
-  <section data-label="회의록 자문2·4차" data-screen-label="28" data-speaker-notes="2차 자문회의에서 여섯 항목의 자문을 받았습니다. 제안 배경 재배치, 사업 내용 정교화, 심사 체계, 예산, 수요조사, 법적 근거. 4차 회의는 Zoom으로 진행해 설문조사를 빼고 역할을 나눴습니다." style="background: var(--bg2); color: var(--ink); display: flex; flex-direction: column; justify-content: flex-start; padding: 96px var(--pad-x) var(--pad-bottom); box-sizing: border-box; font-family: var(--font-kr);">
-    <span style="font-size: var(--type-small); color: var(--blue); font-weight: 600;">회의 아카이브 · 2차 자문회의 · 4차 회의</span>
-    <div style="display: grid; grid-template-columns: 1.25fr 1fr; gap: 56px; margin-top: 28px;">
-      <div style="display: flex; flex-direction: column; gap: 14px; border-top: 3px solid var(--orange); padding-top: 24px;">
-        <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 16px;"><span style="font-size: var(--type-sub); font-weight: 700; letter-spacing: -0.02em;">2차 자문회의</span><span style="font-family: var(--font-num); font-size: 24px; color: var(--mute); white-space: nowrap;">09/10</span></div>
-        <span style="font-size: var(--type-small); font-weight: 600;">창업 제안서 V1.0 자문</span>
-        <span style="font-size: 24px; color: var(--mute);">참석: 김우철·박상민·김영훈 위원, 청년 자문위원</span>
-        <span style="margin-top: 8px; font-size: 24px; color: var(--mute); font-weight: 600;">주요 자문 의견</span>
-        <div style="display: flex; flex-direction: column; gap: 6px; font-size: 24px; line-height: 1.35;">
-          <span><span style="color: var(--orange); font-weight: 600;">문서 구조</span> 창업 실태 → 남구 청년창업의 한계 → 남구의 역할 순으로 제안 배경 재배치, 데이터별 요약문 추가</span>
-          <span><span style="color: var(--orange); font-weight: 600;">사업 설계</span> 창업교육 미이수 86%와 연결 · 온라인 판매 통계의 남구 대상자 적합성 재검토 · 교육–계획–실행 연계</span>
-          <span><span style="color: var(--orange); font-weight: 600;">운영</span> 교육 → 계획서 → 심사 → 집행 → 결과보고 5단계 구분 · 외부 전문가 심사 명시 · 계획 조정 절차</span>
-          <span><span style="color: var(--orange); font-weight: 600;">예산</span> 5천만 원·10명 조정 확인 · 300만 원 3~4개월 집행 적정성 · 강사비·심사비 단가 재검토</span>
-          <span><span style="color: var(--orange); font-weight: 600;">수요조사</span> 부수 활동인지 별도 조사사업인지 결정, 제안서 분리 검토</span>
-          <span><span style="color: var(--orange); font-weight: 600;">근거</span> 지역 특성 기반 변화 중심 기대효과 · 조례 해당 조항 최소 명시</span>
-        </div>
-      </div>
-      <div style="display: flex; flex-direction: column; gap: 14px; border-top: 3px solid var(--blue); padding-top: 24px;">
-        <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 16px;"><span style="font-size: var(--type-sub); font-weight: 700; letter-spacing: -0.02em;">4차 회의</span><span style="font-family: var(--font-num); font-size: 24px; color: var(--mute); white-space: nowrap;">09/21 · Zoom 온라인</span></div>
-        <span style="font-size: var(--type-small); font-weight: 600;">창업 분야 제안서 보완 방향 점검</span>
-        <span style="font-size: 24px; color: var(--mute);">참석: 김우철·박상민 위원</span>
-        <span style="margin-top: 8px; font-size: 24px; color: var(--mute); font-weight: 600;">주요 논의</span>
-        <div style="display: flex; flex-direction: column; gap: 6px; font-size: 24px; line-height: 1.35;">
-          <span>2차 자문에 따라 설문조사 항목을 제안서에서 제외</span>
-          <span>총사업비 약 5천만 원·10명 기준 서포트 비용과 인원 구성 적정성 검토</span>
-        </div>
-        <span style="margin-top: 8px; font-size: 24px; color: var(--mute); font-weight: 600;">결정 사항</span>
-        <div style="display: flex; flex-direction: column; gap: 6px; font-size: 24px; line-height: 1.35;">
-          <span><span style="color: var(--blue); font-weight: 600;">범위</span> 설문조사 삭제</span>
-          <span><span style="color: var(--blue); font-weight: 600;">예산</span> 서포트 비용·인원 검토 후 제안서 반영</span>
-        </div>
-        <span style="margin-top: 8px; font-size: 24px; color: var(--mute); font-weight: 600;">역할 분담</span>
-        <div style="display: flex; flex-direction: column; gap: 6px; font-size: 24px; line-height: 1.35;">
-          <span>PPT 초안 전달 — 김우철 · 정책 제안서 디벨롭 — 박상민</span>
-        </div>
-      </div>
-    </div>
-    <span style="position: absolute; right: var(--pad-x); bottom: 44px; font-size: 24px; line-height: 1.4; color: var(--mute);">근거: 분과 회의록 · 회의 아카이브(meetings.js)</span>
-  </section>
-
-  <section data-label="자문 반영" data-screen-label="29" data-speaker-notes="자문회의 두 번을 거치며 제안은 계속 줄었습니다. 1차 자문에서 두 제안을 하나로. 2차 자문에서 설문조사를 빼고 예산을 다시 산정했습니다. 남은 것이 오늘의 제안입니다." style="background: var(--bg2); color: var(--ink); display: flex; flex-direction: column; justify-content: flex-start; padding: 96px var(--pad-x) var(--pad-bottom); box-sizing: border-box; font-family: var(--font-kr);">
-    <span style="font-size: var(--type-small); color: var(--blue); font-weight: 600;">자문회의 반영</span>
+  <section data-label="자문 반영" data-screen-label="27" data-speaker-notes="자문회의 두 번을 거치며 제안은 계속 줄었습니다. 1차 자문에서 두 제안을 하나로. 2차 자문에서 설문조사를 빼고 예산을 다시 산정했습니다. 남은 것이 오늘의 제안입니다." style="background: var(--bg2); color: var(--ink); display: flex; flex-direction: column; justify-content: flex-start; padding: 96px var(--pad-x) var(--pad-bottom); box-sizing: border-box; font-family: var(--font-kr);">
+    <span style="font-size: var(--type-small); color: var(--blue); font-weight: 600;">7-3. 회의 아카이브_자문 반영</span>
     <h2 style="margin: 24px 0 0; font-size: var(--type-title); line-height: 1.2; font-weight: 700; letter-spacing: -0.027em;">자문 2회, 제안은 두 번 가벼워졌다</h2>
     <div style="display: flex; flex-direction: column; align-items: center; gap: 14px; margin-top: 64px;">
       <div style="width: 100%; background: var(--bg); border-radius: 16px; padding: 28px 48px; box-sizing: border-box; display: grid; grid-template-columns: 260px 1fr auto; align-items: center; gap: 40px;"><span style="font-family: var(--font-num); font-size: var(--type-small); color: var(--mute);">07/28 · 2차 회의</span><span style="font-size: var(--type-body); font-weight: 600;">제안서 초안 2건 — 금융권 일자리 박람회 · 마케팅 심화교육</span><span style="font-family: var(--font-num); font-size: var(--type-sub); font-weight: 700; color: var(--mute);">2건</span></div>
       <span style="font-size: var(--type-small); color: var(--orange); font-weight: 600;">▼ 1차 자문 08/04 · 두 분야 중 하나에 집중</span>
       <div style="width: 78%; background: var(--bg); border-radius: 16px; padding: 28px 48px; box-sizing: border-box; display: grid; grid-template-columns: 260px 1fr auto; align-items: center; gap: 40px;"><span style="font-family: var(--font-num); font-size: var(--type-small); color: var(--mute);">09/09 · 3차 회의</span><span style="font-size: var(--type-body); font-weight: 600;">창업 분야 1건으로 확정, 일자리 제안 보류</span><span style="font-family: var(--font-num); font-size: var(--type-sub); font-weight: 700; color: var(--mute);">1건</span></div>
       <span style="font-size: var(--type-small); color: var(--orange); font-weight: 600;">▼ 2차 자문 09/10 · 수요조사는 별도 사업 성격, 예산·단가 재검증</span>
-      <div style="width: 56%; background: var(--blue); border-radius: 16px; padding: 28px 48px; box-sizing: border-box; display: grid; grid-template-columns: 260px 1fr auto; align-items: center; gap: 40px;"><span style="font-family: var(--font-num); font-size: var(--type-small); color: rgba(255,255,255,0.8);">09/21 · 추가 회의</span><span style="font-size: var(--type-body); font-weight: 600;">설문조사 삭제, 예산 38,500천 원으로 재산정 → 홍보비 조정 후 39,500천 원</span><span style="font-family: var(--font-num); font-size: var(--type-sub); font-weight: 700;">최종</span></div>
+      <div style="width: 56%; background: var(--blue); border-radius: 16px; padding: 28px 48px; box-sizing: border-box; display: grid; grid-template-columns: 260px 1fr auto; align-items: center; gap: 40px;"><span style="font-family: var(--font-num); font-size: var(--type-small); color: rgba(255,255,255,0.8);">09/21 · 4차 회의</span><span style="font-size: var(--type-body); font-weight: 600;">설문조사 삭제, 예산 38,500천 원으로 재산정 → 홍보비 조정 후 39,500천 원</span><span style="font-family: var(--font-num); font-size: var(--type-sub); font-weight: 700;">최종</span></div>
     </div>
     <span style="position: absolute; right: var(--pad-x); bottom: 44px; font-size: 24px; line-height: 1.4; color: var(--mute);">근거: 1차·2차 자문회의 회의록 · 4차 회의 RECAP</span>
   </section>
 
-  <section data-label="한계" data-screen-label="30" data-speaker-notes="마지막으로, 질문이 나올 곳을 먼저 말씀드립니다. 부산 소상공인이 바라는 정책은 자금지원이 1위입니다. 마케팅이 폐업을 줄인다는 인과 증거는 없습니다. 남구 경쟁 밀도는 부산 평균 수준입니다. 그래서 이 사업은 검증형 시범사업이고, 심사 탈락자를 비교군으로 직접 측정합니다." style="background: var(--bg2); color: var(--ink); display: flex; flex-direction: column; justify-content: flex-start; padding: 96px var(--pad-x) var(--pad-bottom); box-sizing: border-box; font-family: var(--font-kr);">
-    <span style="font-size: var(--type-small); color: var(--blue); font-weight: 600;">한계 · 이 데이터가 말하지 않는 것</span>
+  <section data-label="한계" data-screen-label="28" data-speaker-notes="마지막으로, 질문이 나올 곳을 먼저 말씀드립니다. 부산 소상공인이 바라는 정책은 자금지원이 1위입니다. 마케팅이 폐업을 줄인다는 인과 증거는 없습니다. 남구 경쟁 밀도는 부산 평균 수준입니다. 그래서 이 사업은 검증형 시범사업이고, 심사 탈락자를 비교군으로 직접 측정합니다." style="background: var(--bg2); color: var(--ink); display: flex; flex-direction: column; justify-content: flex-start; padding: 96px var(--pad-x) var(--pad-bottom); box-sizing: border-box; font-family: var(--font-kr);">
+    <span style="font-size: var(--type-small); color: var(--blue); font-weight: 600;">8. 한계 - 이 데이터가 말하지 않는 것</span>
     <h2 style="margin: 24px 0 0; font-size: var(--type-title); line-height: 1.2; font-weight: 700; letter-spacing: -0.027em;">질문이 나올 곳을 먼저 말한다</h2>
     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0 48px; margin-top: 32px;">
       <span style="font-size: var(--type-small); font-weight: 600; color: var(--orange); border-bottom: 3px solid var(--orange); padding-bottom: 10px;">불리한 결과 · 한계</span>
@@ -759,7 +673,7 @@
     <span style="position: absolute; right: var(--pad-x); bottom: 44px; font-size: 24px; line-height: 1.4; color: var(--mute);">근거: KOSIS 소상공인실태조사 2024(희망 정책) · 본 제안서 붙임 원자료·계산식</span>
   </section>
 
-  <section data-label="마무리" data-screen-label="31" data-speaker-notes="정리합니다. 확인해 주실 것은 15명, 200만 원, 3,950만 원. 결정해 주실 것은 분과 대표 제안 채택 여부. 요청은 2027년 예산 반영입니다. 배우고, 쓰고, 증명한다. 감사합니다." style="background: var(--bg); color: var(--ink); display: flex; flex-direction: column; justify-content: center; padding: var(--pad-top) var(--pad-x) var(--pad-bottom); box-sizing: border-box; font-family: var(--font-kr);">
+  <section data-label="마무리" data-screen-label="29" data-speaker-notes="정리합니다. 확인해 주실 것은 15명, 200만 원, 3,950만 원. 결정해 주실 것은 분과 대표 제안 채택 여부. 요청은 2027년 예산 반영입니다. 배우고, 쓰고, 증명한다. 감사합니다." style="background: var(--bg); color: var(--ink); display: flex; flex-direction: column; justify-content: center; padding: var(--pad-top) var(--pad-x) var(--pad-bottom); box-sizing: border-box; font-family: var(--font-kr);">
     <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 64px;">
       <div style="display: flex; flex-direction: column; gap: 24px; border-top: 3px solid var(--line); padding-top: 36px;"><span style="font-size: var(--type-small); color: var(--mute); font-weight: 600;">확인</span><span style="font-size: var(--type-sub); font-weight: 700; line-height: 1.3;">15명 · 200만 원 · 39,500천 원</span></div>
       <div style="display: flex; flex-direction: column; gap: 24px; border-top: 3px solid var(--line); padding-top: 36px;"><span style="font-size: var(--type-small); color: var(--mute); font-weight: 600;">결정</span><span style="font-size: var(--type-sub); font-weight: 700; line-height: 1.3;">분과 대표 제안 채택 여부</span></div>

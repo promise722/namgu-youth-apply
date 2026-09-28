@@ -375,18 +375,20 @@
 
   /* ---------- 관리 (프로토타입: 기기 내 데이터만) ---------- */
   function admin() {
+    const demo = /[?&]demo/.test(location.hash);
     const pin = load(LS.pin, null);
-    if (!sessionStorage.getItem('adminOk')) {
+    if (!demo && !sessionStorage.getItem('adminOk')) {
       main.innerHTML = `<h1>접수 관리</h1><form class="card" id="pinForm"><div class="field"><label for="pin">${pin ? '관리 PIN 입력' : '관리 PIN 설정 (4자리 이상)'}</label><input type="password" id="pin" inputmode="numeric" autocomplete="off"></div><div class="hint">프로토타입용 간이 잠금입니다. 실제 운영 시 담당자 계정(구청 SSO 등)으로 교체하세요.</div><div class="actions"><button class="btn btn--primary" type="submit">확인</button></div></form>`;
       $('#pinForm').addEventListener('submit', (e) => { e.preventDefault(); const v = $('#pin').value; if (v.length < 4) return toast('4자리 이상 입력하세요.'); if (!pin) { save(LS.pin, v); } else if (v !== pin) return toast('PIN이 일치하지 않습니다.'); sessionStorage.setItem('adminOk', '1'); admin(); });
       return;
     }
-    const apps = load(LS.apps, []);
+    const apps = demo ? demoApps() : load(LS.apps, []);
     const cnt = (k) => apps.reduce((m, a) => { const v = a.data[k] || '-'; m[v] = (m[v] || 0) + 1; return m; }, {});
     const byDong = cnt('bizDong'), byInd = cnt('indL'), byStatus = apps.reduce((m, a) => { m[a.status] = (m[a.status] || 0) + 1; return m; }, {});
     const top = (o) => Object.entries(o).sort((a, b) => b[1] - a[1]).slice(0, 5).map(([k, v]) => `${esc(k)} ${v}`).join(' · ') || '-';
     main.innerHTML = `
       <h1>접수 관리</h1>
+      ${demo ? '<div class="alert alert--warn"><span>⚠</span><span><strong>시연 모드</strong> 아래 지원자 ' + apps.length + '명은 화면 시연을 위해 만든 가상 데이터입니다. 실제 지원자가 아니며 저장되지 않습니다.</span></div>' : ''}
       <div class="stats">
         <div class="stat"><div class="stat__v">${apps.length}</div><div class="stat__l">총 접수</div></div>
         <div class="stat"><div class="stat__v">${byStatus['선발'] || 0}/15</div><div class="stat__l">선발 확정</div></div>
@@ -394,21 +396,114 @@
         <div class="stat"><div class="stat__v">${byStatus['서류검토'] || 0}</div><div class="stat__l">서류검토 중</div></div>
       </div>
       <div class="card"><strong>사업장 행정동</strong> <span class="muted small">${top(byDong)}</span><br><strong>업종</strong> <span class="muted small">${top(byInd)}</span><div class="hint">군집별 홍보 배분 목표: 대학·중심상권 10 · 주거상권 3 · 항만 배후 2 (정량분석 4절)</div></div>
+      ${aiCard(apps)}
       ${compare(apps)}
       <div class="actions" style="margin:0 0 12px"><a class="btn btn--primary btn--sm" href="map3d/">3D 지도에서 보기</a><button class="btn btn--secondary btn--sm" id="csv">CSV 내보내기</button><button class="btn btn--secondary btn--sm" id="json">JSON 백업</button><label class="btn btn--tertiary btn--sm" for="imp">JSON 가져오기<input type="file" id="imp" accept=".json" hidden></label><button class="btn btn--danger btn--sm" id="wipe">전체 삭제</button><button class="btn btn--text btn--sm" id="lock">잠금</button></div>
       <div class="tbl-wrap"><table class="tbl"><thead><tr><th>접수번호</th><th>신청자</th><th>상호 / 업종</th><th>사업장</th><th>업력</th><th>월 광고비</th><th>수상</th><th>첨부</th><th>상태</th></tr></thead><tbody>
       ${apps.map((a, i) => `<tr><td><strong>${esc(a.no)}</strong><br><span class="small muted">${new Date(a.submittedAt).toLocaleDateString('ko-KR')}</span></td><td>${esc(a.data.name)}<br><span class="small muted">${esc(a.data.phone)}</span></td><td>${esc(a.data.bizName)}<br><span class="small muted">${esc(a.data.indL)} > ${esc(a.data.indM)}</span></td><td>${esc(a.data.bizDong)}</td><td>${yrs(a.data.openDate)}</td><td>${fmt(a.data.adSpend)}만</td><td>${a.data.award === '있음' ? '○' : '-'}</td><td>${a.files.length}</td><td><select data-st="${i}" style="min-height:40px;padding:6px 32px 6px 10px;font-size:.9rem">${['접수', '서류검토', '선발', '예비', '미선발'].map((s) => `<option ${a.status === s ? 'selected' : ''}>${s}</option>`).join('')}</select></td></tr>`).join('') || '<tr><td colspan="9">접수 없음</td></tr>'}
       </tbody></table></div>`;
-    $$('[data-st]').forEach((s) => s.addEventListener('change', () => { apps[+s.dataset.st].status = s.value; save(LS.apps, apps); toast('상태를 저장했습니다.'); }));
+    const persist = () => { if (demo) { toast('시연 모드에서는 저장하지 않습니다.'); return false; } save(LS.apps, apps); return true; };
+    $$('[data-st]').forEach((s) => s.addEventListener('change', () => { apps[+s.dataset.st].status = s.value; if (persist()) toast('상태를 저장했습니다.'); }));
+    const runAi = (quick) => {
+      const out = $('#aiOut');
+      if (!apps.length) { out.innerHTML = '<p class="muted">접수된 신청서가 없습니다.</p>'; return; }
+      out.innerHTML = '<div class="ai-load"><i></i><span>신청서 ' + apps.length + '건을 읽는 중…</span></div>';
+      setTimeout(() => { out.innerHTML = aiTable(recommend(apps)); $('#aiApply').hidden = false; }, quick ? 0 : 900);
+    };
+    $('#aiRun').addEventListener('click', () => runAi(false));
+    $('#aiApply').addEventListener('click', () => {
+      if (!confirm('추천 결과대로 상태를 바꿀까요? 1~15위는 선발, 16~17위는 예비로 표시됩니다.')) return;
+      recommend(apps).forEach((r) => { if (r.verdict !== '-') r.app.status = r.verdict === '추천' ? '선발' : '예비'; });
+      if (persist()) { toast('추천 결과를 상태에 반영했습니다.'); admin(); }
+    });
+    if (demo) { runAi(true); if (/focus=ai/.test(location.hash)) setTimeout(() => $('#aiOut').closest('section').scrollIntoView(), 80); }
     $('#csv').addEventListener('click', () => {
       const cols = ['no', 'submittedAt', 'status', 'name', 'birth', 'phone', 'email', 'resDong', 'resAddr', 'bizName', 'bizNo', 'bizType', 'openDate', 'indL', 'indM', 'bizDong', 'bizAddr', 'staff', 'sales', 'channels', 'adSpend', 'pains', 'goal', 'plan', 'award', 'awardDetail', 'prior', 'agree4'];
       const rows = apps.map((a) => cols.map((c) => { let v = c in a ? a[c] : a.data[c]; if (Array.isArray(v)) v = v.join('|'); return `"${String(v ?? '').replace(/"/g, '""')}"`; }).join(','));
       download(`namgu_apply_${new Date().toISOString().slice(0, 10)}.csv`, '﻿' + [cols.join(','), ...rows].join('\n'), 'text/csv');
     });
     $('#json').addEventListener('click', () => download(`namgu_apply_backup_${Date.now()}.json`, JSON.stringify(apps, null, 1), 'application/json'));
-    $('#imp').addEventListener('change', async (e) => { try { const arr = JSON.parse(await e.target.files[0].text()); if (!Array.isArray(arr)) throw 0; const merged = [...apps]; arr.forEach((r) => { const i = merged.findIndex((x) => x.no === r.no); if (i >= 0) merged[i] = r; else merged.push(r); }); save(LS.apps, merged); toast(`${arr.length}건을 가져왔습니다.`); admin(); } catch { toast('파일 형식이 올바르지 않습니다.'); } });
-    $('#wipe').addEventListener('click', () => { if (confirm('이 기기의 접수 데이터를 모두 삭제할까요? 되돌릴 수 없습니다.')) { save(LS.apps, []); admin(); } });
-    $('#lock').addEventListener('click', () => { sessionStorage.removeItem('adminOk'); admin(); });
+    $('#imp').addEventListener('change', async (e) => { if (demo) return toast('시연 모드에서는 가져올 수 없습니다.'); try { const arr = JSON.parse(await e.target.files[0].text()); if (!Array.isArray(arr)) throw 0; const merged = [...apps]; arr.forEach((r) => { const i = merged.findIndex((x) => x.no === r.no); if (i >= 0) merged[i] = r; else merged.push(r); }); save(LS.apps, merged); toast(`${arr.length}건을 가져왔습니다.`); admin(); } catch { toast('파일 형식이 올바르지 않습니다.'); } });
+    $('#wipe').addEventListener('click', () => { if (demo) return toast('시연 모드에서는 삭제할 수 없습니다.'); if (confirm('이 기기의 접수 데이터를 모두 삭제할까요? 되돌릴 수 없습니다.')) { save(LS.apps, []); admin(); } });
+    $('#lock').addEventListener('click', () => { sessionStorage.removeItem('adminOk'); if (demo) location.hash = '#/admin'; else admin(); });
+  }
+
+  /* ---------- AI 선발 추천 (시안): 신청서 문장·수치를 읽는 규칙 기반 점수 모델 ---------- */
+  const AI_PARTS = [['goal', '목표 구체성', 25], ['plan', '집행 계획', 25], ['need', '지원 필요도', 20], ['age', '업력', 15], ['fit', '지역·업종', 15], ['bonus', '수상 가점', 10]];
+  const LIFE_IND = ['음식', '소매', '수리·개인'];
+  function scoreApp(a) {
+    const d = a.data, goal = String(d.goal || ''), plan = String(d.plan || '');
+    const num = (t) => (t.match(/\d+/g) || []).length;
+    const p = {};
+    p.goal = (num(goal) ? 12 : 0) + (/→|->|에서|까지/.test(goal) && num(goal) >= 2 ? 6 : 0) + (goal.length >= 30 ? 7 : goal.length >= 15 ? 4 : 0);
+    const ch = new Set((plan.match(/플레이스|당근|인스타|블로그|릴스|유튜브|리뷰|쿠폰|검색광고|체험단/g) || [])).size;
+    p.plan = Math.min(ch, 3) * 4 + (num(plan) ? 8 : 0) + (plan.length >= 40 ? 5 : plan.length >= 20 ? 3 : 0);
+    const spend = Number(d.adSpend || 0);
+    p.need = Math.min((d.pains || []).length, 3) * 4 + (spend <= 10 ? 8 : spend <= 30 ? 5 : 2);
+    const y = d.openDate ? (new Date() - new Date(d.openDate)) / (365.25 * 86400000) : 0;
+    p.age = !d.openDate ? 0 : y < 0.5 ? 8 : y <= 3 ? 15 : y <= 5 ? 12 : 6;
+    p.fit = (d.bizDong && d.bizDong !== '남구 외' ? 10 : 0) + (LIFE_IND.includes(d.indL) ? 5 : 2);
+    p.bonus = d.award === '있음' ? 10 : 0;
+    const total = Object.values(p).reduce((x, v) => x + v, 0);
+    const why = [];
+    if (p.goal >= 18) why.push('목표를 수치로 제시'); else if (p.goal <= 7) why.push('목표에 수치가 없음');
+    if (p.plan >= 17) why.push('채널·금액이 구체적인 집행 계획'); else if (p.plan <= 8) why.push('집행 계획이 막연함');
+    if (p.need >= 16) why.push('현재 광고비가 적고 애로가 뚜렷함');
+    if (p.age === 15) why.push('업력 6개월~3년');
+    if (p.fit === 15) why.push('남구 사업장 · 생활형 업종'); else if (p.fit < 10) why.push('남구 외 사업장');
+    if (p.bonus) why.push('수상 가점');
+    return { app: a, parts: p, total, why: why.slice(0, 3).join(' · ') || '특이 사항 없음' };
+  }
+  function recommend(apps) {
+    const rows = apps.map(scoreApp).sort((a, b) => b.total - a.total || new Date(a.app.submittedAt) - new Date(b.app.submittedAt));
+    rows.forEach((r, i) => { r.rank = i + 1; r.verdict = i < 15 ? '추천' : i < 17 ? '예비' : '-'; });
+    return rows;
+  }
+  function aiCard() {
+    return `<section class="card"><h2 class="sec-title">AI 선발 추천 <span class="badge badge--yellow">시안</span></h2>
+      <p class="muted small">신청서의 목표·집행 계획 문장과 수치를 읽어 ${AI_PARTS.map(([, l, m]) => `${l} ${m}`).join(' · ')}점으로 채점하고, 상위 15명을 추천, 다음 2명을 예비로 표시합니다. 배점은 분과가 만든 시안입니다.</p>
+      <div class="hint">정해진 규칙으로 채점하는 모델이며 생성형 AI는 연결하지 않았습니다. 추천은 참고 자료이고 최종 선발은 서류·면접 심사위원이 결정합니다.</div>
+      <div class="actions" style="margin:12px 0"><button class="btn btn--primary btn--sm" id="aiRun" type="button">AI 추천 실행</button><button class="btn btn--secondary btn--sm" id="aiApply" type="button" hidden>추천 결과를 상태에 반영</button></div>
+      <div id="aiOut" aria-live="polite"></div></section>`;
+  }
+  function aiTable(rows) {
+    const seg = (r) => AI_PARTS.map(([k], i) => `<i class="ai-seg ai-seg--${i}" style="width:${r.parts[k] / 110 * 100}%" title="${AI_PARTS[i][1]} ${r.parts[k]}/${AI_PARTS[i][2]}"></i>`).join('');
+    const vb = (v) => v === '추천' ? '<span class="badge badge--green">추천</span>' : v === '예비' ? '<span class="badge badge--yellow">예비</span>' : '<span class="badge">-</span>';
+    return `<div class="ai-legend small muted">${AI_PARTS.map(([, l], i) => `<span><i class="ai-seg ai-seg--${i}"></i>${l}</span>`).join('')}</div>
+      <div class="tbl-wrap"><table class="tbl"><thead><tr><th>순위</th><th>신청자 / 상호</th><th>업종 · 사업장</th><th>점수</th><th>추천 사유</th><th>판정</th></tr></thead><tbody>
+      ${rows.map((r) => `<tr><td><strong>${r.rank}</strong></td><td>${esc(r.app.data.name)}<br><span class="small muted">${esc(r.app.data.bizName)}</span></td><td>${esc(r.app.data.indL)} > ${esc(r.app.data.indM)}<br><span class="small muted">${esc(r.app.data.bizDong)}</span></td><td style="min-width:160px"><strong>${r.total}</strong><span class="small muted"> / 110</span><div class="ai-bar">${seg(r)}</div></td><td class="small">${esc(r.why)}</td><td>${vb(r.verdict)}</td></tr>`).join('')}
+      </tbody></table></div>`;
+  }
+  function demoApps() {
+    const ago = (m) => { const d = new Date(); d.setMonth(d.getMonth() - m); return d.toISOString().slice(0, 10); };
+    const R = [
+      ['김○준', '가상 파스타집', '음식', '양식', '대연3동', 14, 5, '있음', ['네이버 플레이스', '인스타그램'], ['광고비 부담', '성과 측정 방법 모름', '재방문 고객 확보'], '플레이스 방문자 월 300명에서 600명으로, 신규 단골 50명 확보', '네이버 플레이스 광고 80만 원, 인스타그램 릴스 광고 60만 원을 4개월간 집행하고 리뷰 쿠폰으로 재방문 유도'],
+      ['이○서', '가상 네일샵', '수리·개인', '이용·미용', '대연1동', 9, 0, '없음', ['인스타그램'], ['무엇을 해야 할지 모름', '콘텐츠 제작 어려움', '상위노출·노출 저조'], '월 예약 40건에서 70건으로 늘리기', '당근 광고 월 20만 원, 인스타그램 광고 월 20만 원, 플레이스 리뷰 이벤트 운영'],
+      ['박○우', '가상 카페', '음식', '비알코올 음료(카페)', '용호1동', 20, 10, '없음', ['네이버 플레이스', '당근 비즈니스'], ['광고비 부담', '재방문 고객 확보'], '평일 오후 매출 30% 늘리기, 단골 100명 확보', '당근 지역 광고 3개월 90만 원과 쿠폰 발행, 플레이스 사진·메뉴 정비'],
+      ['최○아', '가상 공방', '소매', '기타 소매', '대연5동', 30, 8, '있음', ['인스타그램', '블로그·카페'], ['콘텐츠 제작 어려움', '성과 측정 방법 모름'], '원데이 클래스 월 12회에서 20회로 확대', '인스타그램 릴스 광고 100만 원, 블로그 체험단 40만 원, 예약 전환 수 측정'],
+      ['정○호', '가상 분식', '음식', '기타 간이음식', '문현2동', 7, 0, '없음', ['배달앱'], ['광고비 부담', '무엇을 해야 할지 모름', '상위노출·노출 저조'], '포장 주문 하루 15건에서 25건으로', '당근 광고와 플레이스 광고를 각각 2개월씩 집행해 어느 쪽 주문이 많은지 비교'],
+      ['강○린', '가상 미용실', '수리·개인', '이용·미용', '용호3동', 26, 15, '없음', ['네이버 플레이스'], ['재방문 고객 확보', '성과 측정 방법 모름'], '신규 고객 월 20명 확보, 재방문율 40%에서 55%로', '플레이스 검색광고 월 30만 원 4개월, 리뷰 쿠폰 20만 원'],
+      ['조○민', '가상 베이커리', '음식', '제과·제빵·떡', '대연3동', 40, 25, '없음', ['인스타그램', '네이버 플레이스'], ['시간 부족', '콘텐츠 제작 어려움'], '주말 매출 20% 증가', '인스타그램 광고 120만 원, 릴스 촬영 40만 원'],
+      ['윤○지', '가상 필라테스', '예술·스포츠', '스포츠 서비스', '대연6동', 11, 20, '없음', ['인스타그램', '블로그·카페'], ['광고비 부담', '상위노출·노출 저조'], '체험 수업 신청 월 10건에서 30건으로', '플레이스 광고 60만 원, 블로그 체험단 50만 원, 인스타그램 광고 50만 원'],
+      ['장○현', '가상 반찬가게', '소매', '식료품 소매', '감만1동', 18, 0, '없음', ['없음'], ['무엇을 해야 할지 모름', '시간 부족', '광고비 부담'], '동네 단골 늘리기', '당근에 가게 소식 올리고 광고 해 보기'],
+      ['임○솔', '가상 사진관', '과학·기술', '사진 촬영', '대연1동', 22, 10, '있음', ['인스타그램', '네이버 플레이스'], ['상위노출·노출 저조', '재방문 고객 확보'], '프로필 촬영 예약 월 25건에서 40건으로', '플레이스 검색광고 90만 원, 인스타그램 광고 70만 원, 예약 경로별 전환 기록'],
+      ['한○결', '가상 꽃집', '소매', '기타 소매', '용호2동', 5, 0, '없음', ['인스타그램'], ['광고비 부담', '콘텐츠 제작 어려움', '성과 측정 방법 모름'], '정기 구독 고객 0명에서 30명으로', '당근 광고 40만 원, 인스타그램 릴스 광고 80만 원, 구독 쿠폰 발행'],
+      ['오○빈', '가상 국밥', '음식', '한식', '문현1동', 50, 30, '없음', ['배달앱', '네이버 플레이스'], ['재방문 고객 확보'], '매출 늘리기', '광고를 늘릴 예정'],
+      ['서○윤', '가상 세탁소', '수리·개인', '세탁', '우암동', 34, 0, '없음', ['전단·현수막 등 오프라인'], ['무엇을 해야 할지 모름', '성과 측정 방법 모름'], '수거 배달 고객 월 10명에서 40명으로', '당근 지역 광고 3개월 60만 원, 플레이스 등록과 리뷰 이벤트 30만 원'],
+      ['신○람', '가상 디저트', '음식', '제과·제빵·떡', '남구 외', 12, 10, '있음', ['인스타그램'], ['광고비 부담', '상위노출·노출 저조'], '택배 주문 월 50건에서 120건으로', '인스타그램 광고 120만 원, 스마트스토어 검색광고 60만 원'],
+      ['권○영', '가상 공부방', '교육', '일반 교육', '용호1동', 16, 5, '없음', ['블로그·카페', '당근 비즈니스'], ['상위노출·노출 저조', '시간 부족'], '신규 상담 월 5건에서 15건으로', '당근 광고 50만 원, 블로그 콘텐츠 제작 60만 원, 상담 신청 수 기록'],
+      ['황○준', '가상 자전거 수리', '수리·개인', '기타 개인서비스', '감만2동', 70, 0, '없음', ['없음'], ['무엇을 해야 할지 모름'], '가게 알리기', '잘 모르겠음, 교육 듣고 정할 예정'],
+      ['안○희', '가상 김밥', '음식', '기타 간이음식', '대연4동', 8, 5, '없음', ['배달앱', '당근 비즈니스'], ['광고비 부담', '재방문 고객 확보', '성과 측정 방법 모름'], '점심 단체 주문 월 4건에서 12건으로', '당근 광고 60만 원, 플레이스 광고 60만 원, 단체 주문 쿠폰 20만 원'],
+      ['송○우', '가상 편집숍', '소매', '섬유·의복·신발 소매', '대연3동', 28, 40, '없음', ['인스타그램', '쿠팡·스마트스토어 등 온라인몰'], ['성과 측정 방법 모름'], '온라인 매출 비중 20%에서 35%로', '인스타그램 광고 150만 원 집행, 전환 추적 설정'],
+      ['전○나', '가상 요가원', '예술·스포츠', '스포츠 서비스', '용당동', 4, 0, '없음', ['인스타그램'], ['광고비 부담', '무엇을 해야 할지 모름', '콘텐츠 제작 어려움'], '회원 15명에서 40명으로', '당근 광고 50만 원, 인스타그램 릴스 광고 70만 원, 체험권 쿠폰'],
+      ['홍○택', '가상 치킨', '음식', '기타 간이음식', '문현3동', 45, 35, '없음', ['배달앱'], ['광고비 부담'], '배달 말고 포장 손님 늘리기', '플레이스 광고'],
+      ['유○선', '가상 도자기 공방', '예술·스포츠', '창작·예술', '대연5동', 13, 5, '있음', ['인스타그램', '블로그·카페'], ['콘텐츠 제작 어려움', '상위노출·노출 저조', '재방문 고객 확보'], '클래스 예약 월 8건에서 20건으로', '플레이스 광고 50만 원, 인스타그램 릴스 광고 80만 원, 블로그 체험단 30만 원'],
+      ['문○혁', '가상 밀키트', '소매', '식료품 소매', '용호4동', 10, 10, '없음', ['쿠팡·스마트스토어 등 온라인몰'], ['상위노출·노출 저조', '광고비 부담'], '재구매율 15%에서 30%로', '당근 광고 40만 원, 리뷰 쿠폰 40만 원, 인스타그램 광고 80만 원'],
+      ['양○주', '가상 수제버거', '음식', '양식', '대연1동', 3, 0, '없음', ['인스타그램'], ['무엇을 해야 할지 모름', '시간 부족'], '개업 초기 손님 모으기', '인스타그램 광고를 해 보고 싶음'],
+      ['배○은', '가상 반려동물 미용', '수리·개인', '기타 개인서비스', '용호1동', 19, 10, '없음', ['네이버 플레이스', '인스타그램'], ['재방문 고객 확보', '성과 측정 방법 모름', '광고비 부담'], '신규 예약 월 15건에서 35건으로, 재방문율 50% 달성', '플레이스 검색광고 80만 원, 당근 광고 40만 원, 재방문 쿠폰 30만 원']
+    ];
+    return R.map((r, i) => ({ no: `DEMO-${String(i + 1).padStart(4, '0')}`, submittedAt: new Date(Date.UTC(2027, 1, 1 + i, 3)).toISOString(), status: '접수', files: [],
+      data: { name: r[0], phone: '010-0000-' + String(i + 1).padStart(4, '0'), bizName: r[1], indL: r[2], indM: r[3], bizDong: r[4], openDate: ago(r[5]), adSpend: r[6], award: r[7], channels: r[8], pains: r[9], goal: r[10], plan: r[11] } }));
   }
   function compare(apps) {
     const share = window.NAMGU_IND_SHARE, n = apps.length;
