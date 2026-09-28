@@ -103,3 +103,33 @@
     } else if (Date.now() - start < 15000) setTimeout(wait, 200);
   })();
 })();
+
+/* 접수 관리 화면 팝업: 21쪽 버튼을 누르면 관리 화면(시연용 가상 데이터)을 크게 띄운다 */
+(() => {
+  const style = document.createElement('style');
+  style.textContent = `
+  .adm { position: fixed; inset: 0; z-index: 99998; display: grid; place-items: center; background: rgba(8,9,12,.78); backdrop-filter: blur(6px); font-family: 'Pretendard JP Variable', 'Pretendard', sans-serif; }
+  .adm__win { width: min(94vw, 1500px); height: 90vh; background: #0b0b0c; border-radius: 16px; padding: 10px; box-sizing: border-box; display: flex; flex-direction: column; gap: 8px; box-shadow: 0 40px 100px rgba(0,0,0,.6), 0 0 0 2px rgba(255,255,255,.14); }
+  .adm__bar { display: flex; align-items: center; gap: 10px; color: #aeb0b6; font-size: 14px; }
+  .adm__url { flex: 1; background: rgba(255,255,255,.1); border-radius: 8px; padding: 6px 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .adm__bar a, .adm__bar button { color: #fff; background: rgba(255,255,255,.14); border: 0; border-radius: 8px; padding: 7px 14px; font: inherit; font-weight: 600; text-decoration: none; cursor: pointer; }
+  .adm__bar button:hover, .adm__bar a:hover { background: rgba(255,255,255,.26); }
+  .adm iframe { flex: 1; width: 100%; border: 0; border-radius: 10px; background: #fff; }
+  `;
+  document.head.appendChild(style);
+  let el = null;
+  const keys = (e) => { if (!el) return; e.stopPropagation(); if (e.key === 'Escape') close(); };
+  function close() { if (el) { el.remove(); el = null; window.removeEventListener('keydown', keys, true); } }
+  function open() {
+    if (el) return;
+    el = document.createElement('div'); el.className = 'adm';
+    el.innerHTML = '<div class="adm__win" role="dialog" aria-label="접수 관리 화면"><div class="adm__bar"><span class="adm__url">namgu-youth-apply.pages.dev/#/admin · 시연용 가상 데이터</span><a href="../#/admin?demo" target="_blank" rel="noopener">새 창으로 열기</a><button type="button">닫기 (Esc)</button></div><iframe src="../#/admin?demo&focus=ai" title="접수 관리 화면"></iframe></div>';
+    el.addEventListener('click', (e) => { if (e.target === el || e.target.closest('button')) close(); });
+    document.body.appendChild(el);
+    window.addEventListener('keydown', keys, true);
+  }
+  document.addEventListener('click', (e) => {
+    const hit = e.composedPath().find((n) => n instanceof Element && n.hasAttribute('data-admin-popup'));
+    if (hit) { e.preventDefault(); e.stopPropagation(); open(); }
+  }, true);
+})();
