@@ -40,7 +40,7 @@
     if (busy) return; busy = true;
     const el = document.createElement('div');
     el.className = 'qrs';
-    el.innerHTML = '<div class="qrs__phone"><div class="qrs__view"><div class="qrs__qr"><img src="assets/qr.png" alt=""></div><div class="qrs__frame"><i></i><i></i><i></i><i></i><span class="qrs__line"></span></div><span class="qrs__chip">namgu-youth-apply.pages.dev 열기</span></div></div><div class="qrs__flash"></div>';
+    el.innerHTML = '<div class="qrs__phone"><div class="qrs__view"><div class="qrs__qr"><img src="assets/qr.png" alt=""></div><div class="qrs__frame"><i></i><i></i><i></i><i></i><span class="qrs__line"></span></div><span class="qrs__chip">promise722.github.io/namgu-youth-apply 열기</span></div></div><div class="qrs__flash"></div>';
     document.body.appendChild(el);
     const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
     requestAnimationFrame(() => requestAnimationFrame(() => el.classList.add('on')));
@@ -123,7 +123,7 @@
   function open() {
     if (el) return;
     el = document.createElement('div'); el.className = 'adm';
-    el.innerHTML = '<div class="adm__win" role="dialog" aria-label="접수 관리 화면"><div class="adm__bar"><span class="adm__url">namgu-youth-apply.pages.dev/#/admin · 시연용 가상 데이터</span><a href="../#/admin?demo" target="_blank" rel="noopener">새 창으로 열기</a><button type="button">닫기 (Esc)</button></div><iframe src="../#/admin?demo&focus=ai" title="접수 관리 화면"></iframe></div>';
+    el.innerHTML = '<div class="adm__win" role="dialog" aria-label="접수 관리 화면"><div class="adm__bar"><span class="adm__url">promise722.github.io/namgu-youth-apply/#/admin · 시연용 가상 데이터</span><a href="../#/admin?demo" target="_blank" rel="noopener">새 창으로 열기</a><button type="button">닫기 (Esc)</button></div><iframe src="../#/admin?demo&focus=ai" title="접수 관리 화면"></iframe></div>';
     el.addEventListener('click', (e) => { if (e.target === el || e.target.closest('button')) close(); });
     document.body.appendChild(el);
     window.addEventListener('keydown', keys, true);
